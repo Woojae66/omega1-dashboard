@@ -591,24 +591,26 @@ function sO(){return{...CO,plugins:{legend:{display:true,position:'top',labels:{
 
 const sA=D.A_start,sB=D.B_start,dA=D.dates.slice(sA),dB=D.dates.slice(sB),sl=(a,s)=>a.slice(s);
 
-// Rolling average function — smooths out daily noise
+// Rolling average — smooths daily noise
 function ravg(arr,w){w=w||7;const r=[];for(let i=0;i<arr.length;i++){let s=0,c=0;for(let j=Math.max(0,i-w+1);j<=i;j++){s+=arr[j];c++;}r.push(Math.round(s/c*10)/10);}return r;}
+// Progress % smoother — forward-fills to peak (never drops once complete)
+function psmooth(arr){const r=[...arr];let mx=0;for(let i=0;i<r.length;i++){if(r[i]>mx)mx=r[i];else r[i]=mx;}return r;}
 
-// A charts (navy palette) — 7-day rolling avg for smooth curves
-new Chart(document.getElementById('cA_asrs'),{type:'line',data:{labels:dA,datasets:[{label:'ASRS % (7d avg)',data:ravg(sl(D.A_asrs,sA),7),borderColor:'#1B3A5C',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_ab'),{type:'line',data:{labels:dA,datasets:[{label:'Anchor % (7d avg)',data:ravg(sl(D.A_ab,sA),7),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_hov'),{type:'line',data:{labels:dA,datasets:[{label:'Handover % (7d avg)',data:ravg(sl(D.A_hov,sA),7),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_pal'),{type:'bar',data:{labels:dA,datasets:[{label:'Pallets (7d avg)',data:ravg(sl(D.A_pallets,sA),7),backgroundColor:'rgba(27,58,92,.7)',borderRadius:3}]},options:CO});
-new Chart(document.getElementById('cA_lab'),{type:'bar',data:{labels:dA,datasets:[{label:'Operators',data:ravg(sl(D.A_ops,sA),7),backgroundColor:'#1B3A5C',borderRadius:2},{label:'Labour',data:ravg(sl(D.A_lab,sA),7),backgroundColor:'#93B5D9',borderRadius:2}]},options:sO()});
-new Chart(document.getElementById('cA_tool'),{type:'bar',data:{labels:dA,datasets:[{label:'Equipment',data:ravg(sl(D.A_equip,sA),7),backgroundColor:'rgba(27,58,92,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:ravg(sl(D.A_mach,sA),7),backgroundColor:'rgba(27,58,92,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
+// A charts — progress uses psmooth (never drops), manpower uses actual daily numbers
+new Chart(document.getElementById('cA_asrs'),{type:'line',data:{labels:dA,datasets:[{label:'ASRS %',data:psmooth(sl(D.A_asrs,sA)),borderColor:'#1B3A5C',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cA_ab'),{type:'line',data:{labels:dA,datasets:[{label:'Anchor %',data:psmooth(sl(D.A_ab,sA)),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cA_hov'),{type:'line',data:{labels:dA,datasets:[{label:'Handover %',data:psmooth(sl(D.A_hov,sA)),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cA_pal'),{type:'bar',data:{labels:dA,datasets:[{label:'Pallets',data:sl(D.A_pallets,sA),backgroundColor:'rgba(27,58,92,.7)',borderRadius:3}]},options:CO});
+new Chart(document.getElementById('cA_lab'),{type:'bar',data:{labels:dA,datasets:[{label:'Operators',data:sl(D.A_ops,sA),backgroundColor:'#1B3A5C',borderRadius:2},{label:'Labour',data:sl(D.A_lab,sA),backgroundColor:'#93B5D9',borderRadius:2}]},options:sO()});
+new Chart(document.getElementById('cA_tool'),{type:'bar',data:{labels:dA,datasets:[{label:'Equipment',data:sl(D.A_equip,sA),backgroundColor:'rgba(27,58,92,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:sl(D.A_mach,sA),backgroundColor:'rgba(27,58,92,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
 
-// B charts (AXL Signal Red palette) — 7-day rolling avg
-new Chart(document.getElementById('cB_asrs'),{type:'line',data:{labels:dB,datasets:[{label:'ASRS % (7d avg)',data:ravg(sl(D.B_asrs,sB),7),borderColor:'#C8102E',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_ab'),{type:'line',data:{labels:dB,datasets:[{label:'Anchor % (7d avg)',data:ravg(sl(D.B_ab,sB),7),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_hov'),{type:'line',data:{labels:dB,datasets:[{label:'Handover % (7d avg)',data:ravg(sl(D.B_hov,sB),7),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_pal'),{type:'bar',data:{labels:dB,datasets:[{label:'Pallets (7d avg)',data:ravg(sl(D.B_pallets,sB),7),backgroundColor:'rgba(200,16,46,.7)',borderRadius:3}]},options:CO});
-new Chart(document.getElementById('cB_lab'),{type:'bar',data:{labels:dB,datasets:[{label:'Operators',data:ravg(sl(D.B_ops,sB),7),backgroundColor:'#C8102E',borderRadius:2},{label:'Labour',data:ravg(sl(D.B_lab,sB),7),backgroundColor:'#F9CDD4',borderRadius:2}]},options:sO()});
-new Chart(document.getElementById('cB_tool'),{type:'bar',data:{labels:dB,datasets:[{label:'Equipment',data:ravg(sl(D.B_equip,sB),7),backgroundColor:'rgba(200,16,46,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:ravg(sl(D.B_mach,sB),7),backgroundColor:'rgba(200,16,46,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
+// B charts — progress uses psmooth, manpower uses actual daily numbers
+new Chart(document.getElementById('cB_asrs'),{type:'line',data:{labels:dB,datasets:[{label:'ASRS %',data:psmooth(sl(D.B_asrs,sB)),borderColor:'#C8102E',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cB_ab'),{type:'line',data:{labels:dB,datasets:[{label:'Anchor %',data:psmooth(sl(D.B_ab,sB)),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cB_hov'),{type:'line',data:{labels:dB,datasets:[{label:'Handover %',data:psmooth(sl(D.B_hov,sB)),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
+new Chart(document.getElementById('cB_pal'),{type:'bar',data:{labels:dB,datasets:[{label:'Pallets',data:sl(D.B_pallets,sB),backgroundColor:'rgba(200,16,46,.7)',borderRadius:3}]},options:CO});
+new Chart(document.getElementById('cB_lab'),{type:'bar',data:{labels:dB,datasets:[{label:'Operators',data:sl(D.B_ops,sB),backgroundColor:'#C8102E',borderRadius:2},{label:'Labour',data:sl(D.B_lab,sB),backgroundColor:'#F9CDD4',borderRadius:2}]},options:sO()});
+new Chart(document.getElementById('cB_tool'),{type:'bar',data:{labels:dB,datasets:[{label:'Equipment',data:sl(D.B_equip,sB),backgroundColor:'rgba(200,16,46,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:sl(D.B_mach,sB),backgroundColor:'rgba(200,16,46,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
 
 // Weather
 const wm={"2025-02": {"c": 3, "r": 0}, "2025-06": {"c": 15, "r": 1}, "2025-07": {"c": 21, "r": 0}, "2025-08": {"c": 24, "r": 0}, "2025-09": {"c": 23, "r": 3}, "2025-10": {"c": 26, "r": 0}, "2025-11": {"c": 25, "r": 0}, "2025-12": {"c": 23, "r": 0}, "2026-01": {"c": 26, "r": 0}, "2026-02": {"c": 24, "r": 0}, "2026-03": {"c": 11, "r": 0}};
