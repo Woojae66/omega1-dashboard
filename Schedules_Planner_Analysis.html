@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedules Planner Analysis — แผนปรับใหม่ Rev.10</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; color: #1a1a2e; padding: 24px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  h1 { font-size: 1.8rem; margin-bottom: 4px; color: #1a1a2e; }
+  .subtitle { color: #666; font-size: 0.95rem; margin-bottom: 28px; }
+  .alert-banner { background: #fff3cd; border-left: 5px solid #ffc107; padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; }
+  .alert-banner strong { color: #856404; }
+  .alert-banner .big-num { font-size: 1.6rem; font-weight: 700; color: #d63031; }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .kpi { background: #fff; border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .kpi .value { font-size: 2rem; font-weight: 700; }
+  .kpi .label { font-size: 0.85rem; color: #888; margin-top: 4px; }
+  .kpi.green .value { color: #00b894; }
+  .kpi.red .value { color: #d63031; }
+  .kpi.blue .value { color: #0984e3; }
+  .kpi.orange .value { color: #e17055; }
+
+  .section { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .section h2 { font-size: 1.2rem; margin-bottom: 16px; color: #2d3436; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+
+  .zone-row { display: flex; align-items: center; margin-bottom: 14px; }
+  .zone-label { width: 180px; font-size: 0.9rem; font-weight: 600; flex-shrink: 0; }
+  .zone-bar-bg { flex: 1; background: #eee; border-radius: 8px; height: 28px; position: relative; overflow: hidden; }
+  .zone-bar-fill { height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.8rem; font-weight: 600; }
+  .zone-stats { width: 140px; text-align: right; font-size: 0.85rem; color: #636e72; margin-left: 12px; flex-shrink: 0; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { background: #2d3436; color: #fff; padding: 10px 12px; text-align: left; }
+  td { padding: 9px 12px; border-bottom: 1px solid #eee; }
+  tr:hover td { background: #f8f9fa; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+  .badge-done { background: #d4edda; color: #155724; }
+  .badge-overdue { background: #f8d7da; color: #721c24; }
+
+  /* Gantt Chart */
+  .gantt-wrapper { overflow-x: auto; }
+  .gantt { border-collapse: collapse; min-width: 100%; font-size: 0.75rem; }
+  .gantt th, .gantt td { padding: 4px 2px; text-align: center; white-space: nowrap; }
+  .gantt th { background: #2d3436; color: #fff; font-size: 0.7rem; position: sticky; top: 0; }
+  .gantt .srm-cell { text-align: left; font-weight: 600; padding-left: 8px; position: sticky; left: 0; background: #fff; z-index: 2; min-width: 80px; }
+  .gantt .month-header { background: #636e72; font-size: 0.75rem; }
+  .gantt .bar-green { background: #92D050; height: 18px; border-radius: 2px; }
+  .gantt .bar-purple { background: #7030A0; height: 18px; border-radius: 2px; }
+  .gantt .bar-blue { background: #00B0F0; height: 18px; border-radius: 2px; }
+  .gantt .sunday { background: #ffe0e0; }
+  .gantt .today-col { background: #fff3cd; border-left: 2px solid #ffc107; border-right: 2px solid #ffc107; }
+
+  .legend { display: flex; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.85rem; }
+  .legend-swatch { width: 20px; height: 14px; border-radius: 3px; }
+
+  .timeline { position: relative; padding-left: 30px; }
+  .timeline::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 3px; background: #dfe6e9; }
+  .tl-item { position: relative; margin-bottom: 18px; }
+  .tl-item::before { content: ''; position: absolute; left: -23px; top: 4px; width: 14px; height: 14px; border-radius: 50%; border: 3px solid; }
+  .tl-item.done::before { border-color: #00b894; background: #00b894; }
+  .tl-item.active::before { border-color: #fdcb6e; background: #fdcb6e; }
+  .tl-item.overdue::before { border-color: #d63031; background: #d63031; }
+  .tl-item .tl-date { font-size: 0.8rem; color: #888; }
+  .tl-item .tl-title { font-weight: 600; font-size: 0.95rem; }
+  .tl-item .tl-desc { font-size: 0.85rem; color: #636e72; }
+
+  .risk-card { border-left: 4px solid; padding: 14px 18px; border-radius: 6px; margin-bottom: 12px; }
+  .risk-high { border-color: #d63031; background: #ffeaea; }
+  .risk-med { border-color: #fdcb6e; background: #fff9e6; }
+  .risk-card strong { display: block; margin-bottom: 4px; }
+
+  .track-card { background: #f8f9fa; border-radius: 8px; padding: 16px; margin-bottom: 12px; border-left: 5px solid; }
+  .track-green { border-color: #92D050; }
+  .track-blue { border-color: #00B0F0; }
+  .track-purple { border-color: #7030A0; }
+  .track-card h3 { font-size: 1rem; margin-bottom: 6px; }
+  .track-card p { font-size: 0.9rem; color: #555; margin-bottom: 4px; }
+  .track-card .tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
+  .tag-complete { background: #d4edda; color: #155724; }
+  .tag-stalled { background: #f8d7da; color: #721c24; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 768px) {
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Gantt Chart Analysis — Schedules Planner</h1>
+  <p class="subtitle">แผนปรับใหม่ Rev.10 | Analysis date: 17 March 2026</p>
+
+  <!-- Alert Banner -->
+  <div class="alert-banner">
+    <strong>Schedule Alert:</strong> The planned end date (12 Mar 2026) has passed. <span class="big-num">13</span> tasks remain in the Purple track (Zone 6 & 8, S01-S17), all overdue by 13–45 days. No work has been recorded since 27 January — a <span class="big-num">49-day</span> gap.
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-row">
+    <div class="kpi green">
+      <div class="value">75.9%</div>
+      <div class="label">Overall Completion (41/54)</div>
+    </div>
+    <div class="kpi red">
+      <div class="value">13</div>
+      <div class="label">Overdue Tasks</div>
+    </div>
+    <div class="kpi blue">
+      <div class="value">49 days</div>
+      <div class="label">Since Last Progress</div>
+    </div>
+    <div class="kpi orange">
+      <div class="value">3 tracks</div>
+      <div class="label">Concurrent Work Streams</div>
+    </div>
+  </div>
+
+  <!-- Color Legend -->
+  <div class="section">
+    <h2>Gantt Chart Color Legend</h2>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#92D050;"></div> Green — Zone 1,2,3,9,4 (S01-S29)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#00B0F0;"></div> Blue — Zone 5 & 7 (S18-S29)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#7030A0;"></div> Purple — Zone 6 & 8 (S01-S17)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#FF0000;"></div> Red columns — Sundays (non-work days)</div>
+    </div>
+    <p style="font-size:0.9rem;color:#555;">The spreadsheet uses color-coded horizontal bars to show planned work duration for each SRM task. Each bar spans the planned start-to-due-date range. Bars overlap, indicating concurrent/parallel execution of multiple SRMs.</p>
+  </div>
+
+  <!-- 3 Concurrent Tracks -->
+  <div class="section">
+    <h2>3 Concurrent Work Tracks</h2>
+    <p style="margin-bottom:16px;font-size:0.9rem;color:#555;">The Gantt chart reveals the project runs 3 parallel work tracks simultaneously, each color-coded. Here is each track's status:</p>
+
+    <div class="track-card track-green">
+      <h3>Track 1: Green — Zone 1,2,3,9,4 (S01-S29) <span class="tag tag-complete">COMPLETE</span></h3>
+      <p><strong>18 SRMs:</strong> SRM 36 → SRM 19</p>
+      <p><strong>Gantt span:</strong> 24 Nov 2025 → 12 Jan 2026 (50 days)</p>
+      <p><strong>Avg planned duration per SRM:</strong> ~10 days, with 2-day stagger between consecutive tasks</p>
+      <p><strong>Pattern:</strong> Tasks start cascading early (many begin 24 Nov) with due dates spreading out. Later SRMs (20, 19) have longer bars (15–17 days) suggesting more complex work.</p>
+    </div>
+
+    <div class="track-card track-blue">
+      <h3>Track 2: Blue — Zone 5 & 7 (S18-S29) <span class="tag tag-complete">COMPLETE</span></h3>
+      <p><strong>18 SRMs:</strong> Zone 5 (SRM 18→9) + Zone 7 (SRM 8→1)</p>
+      <p><strong>Gantt span:</strong> 1 Dec 2025 → 26 Jan 2026 (57 days)</p>
+      <p><strong>Avg planned duration per SRM:</strong> ~18 days, with high overlap (up to 6 SRMs active simultaneously)</p>
+      <p><strong>Pattern:</strong> Zone 5 and Zone 7 run sequentially within this track. Zone 5 starts early Dec, Zone 7 starts mid-Dec. Long bar durations indicate complex/multi-step SRM work.</p>
+    </div>
+
+    <div class="track-card track-purple">
+      <h3>Track 3: Purple — Zone 6 & 8 (S01-S17) <span class="tag tag-stalled">STALLED</span></h3>
+      <p><strong>18 SRMs:</strong> Zone 6 (SRM 18→9) + Zone 8 (SRM 8→1)</p>
+      <p><strong>Gantt span:</strong> 22 Dec 2025 → 12 Mar 2026 (81 days — longest track)</p>
+      <p><strong>Avg planned duration per SRM:</strong> ~26 days (longest of all tracks)</p>
+      <p><strong>Completed:</strong> 5 of 18 (Zone 6: SRM 18–14 done, SRM 13–9 pending. Zone 8: all 8 pending)</p>
+      <p><strong>Critical:</strong> This was always the longest/hardest track. Zone 8's last 5 SRMs (5→1) have bars spanning 34–40 days each, ending at Mar 12 — the true project end date. They were planned to run heavily overlapped/concurrent.</p>
+    </div>
+  </div>
+
+  <!-- Progress by Zone -->
+  <div class="section">
+    <h2>Progress by Zone</h2>
+
+    <div class="zone-row">
+      <div class="zone-label" style="color:#6b8e23;">Zone 1,2,3,9,4<br><small style="color:#888">(S01-S29) Green</small></div>
+      <div class="zone-bar-bg"><div class="zone-bar-fill" style="width:100%;background:#92D050;">100%</div></div>
+      <div class="zone-stats">18/18 Done</div>
+    </div>
+
+    <div class="zone-row">
+      <div class="zone-label" style="color:#0090c0;">Zone 5<br><small style="color:#888">(S18-S29) Blue</small></div>
+      <div class="zone-bar-bg"><div class="zone-bar-fill" style="width:100%;background:#00B0F0;">100%</div></div>
+      <div class="zone-stats">10/10 Done</div>
+    </div>
+
+    <div class="zone-row">
+      <div class="zone-label" style="color:#0090c0;">Zone 7<br><small style="color:#888">(S18-S29) Blue</small></div>
+      <div class="zone-bar-bg"><div class="zone-bar-fill" style="width:100%;background:#00B0F0;">100%</div></div>
+      <div class="zone-stats">8/8 Done</div>
+    </div>
+
+    <div class="zone-row">
+      <div class="zone-label" style="color:#7030A0;">Zone 6<br><small style="color:#888">(S01-S17) Purple</small></div>
+      <div class="zone-bar-bg"><div class="zone-bar-fill" style="width:50%;background:#7030A0;">50%</div></div>
+      <div class="zone-stats">5/10 — <span style="color:#d63031">5 overdue</span></div>
+    </div>
+
+    <div class="zone-row">
+      <div class="zone-label" style="color:#7030A0;">Zone 8<br><small style="color:#888">(S01-S17) Purple</small></div>
+      <div class="zone-bar-bg"><div class="zone-bar-fill" style="width:0%;background:#7030A0;min-width:40px;">0%</div></div>
+      <div class="zone-stats">0/8 — <span style="color:#d63031">8 overdue</span></div>
+    </div>
+  </div>
+
+  <!-- Gantt Chart Visualization -->
+  <div class="section">
+    <h2>Gantt Chart — Planned Duration Bars</h2>
+    <p style="font-size:0.85rem;color:#666;margin-bottom:12px;">Bars show planned work duration for each SRM. Today (17 Mar) is marked in yellow. Scroll horizontally to see the full timeline.</p>
+    <div class="gantt-wrapper">
+      <table class="gantt">
+        <thead>
+          <tr>
+            <th class="srm-cell" style="z-index:3;">SRM</th>
+            <th class="srm-cell" style="z-index:3;min-width:50px;">Status</th>
+            <th colspan="7" class="month-header">Nov 2025</th>
+            <th colspan="31" class="month-header">Dec 2025</th>
+            <th colspan="31" class="month-header">Jan 2026</th>
+            <th colspan="28" class="month-header">Feb 2026</th>
+            <th colspan="17" class="month-header">Mar 2026</th>
+          </tr>
+        </thead>
+        <tbody id="gantt-body">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Overdue Tasks Detail -->
+  <div class="section">
+    <h2>Overdue Tasks — Purple Track Detail</h2>
+    <table>
+      <thead>
+        <tr><th>#</th><th>SRM</th><th>Zone</th><th>Planned Start</th><th>Planned End</th><th>Duration</th><th>Due Date</th><th>Days Overdue</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>24</td><td>SRM 13</td><td>6 (S01-S17)</td><td>7 Jan</td><td>31 Jan</td><td>22 days</td><td>31 Jan 2026</td><td style="color:#d63031;font-weight:700">45</td></tr>
+        <tr><td>25</td><td>SRM 12</td><td>6 (S01-S17)</td><td>9 Jan</td><td>4 Feb</td><td>23 days</td><td>4 Feb 2026</td><td style="color:#d63031;font-weight:700">41</td></tr>
+        <tr><td>26</td><td>SRM 11</td><td>6 (S01-S17)</td><td>12 Jan</td><td>6 Feb</td><td>23 days</td><td>6 Feb 2026</td><td style="color:#d63031;font-weight:700">39</td></tr>
+        <tr><td>27</td><td>SRM 10</td><td>6 (S01-S17)</td><td>14 Jan</td><td>9 Feb</td><td>23 days</td><td>9 Feb 2026</td><td style="color:#d63031;font-weight:700">36</td></tr>
+        <tr><td>28</td><td>SRM 9</td><td>6 (S01-S17)</td><td>16 Jan</td><td>11 Feb</td><td>23 days</td><td>11 Feb 2026</td><td style="color:#d63031;font-weight:700">34</td></tr>
+        <tr style="background:#f8f8f8;"><td colspan="8" style="padding:4px 12px;font-weight:600;color:#7030A0;">Zone 8 (S01-S17) — Not started</td></tr>
+        <tr><td>29</td><td>SRM 8</td><td>8 (S01-S17)</td><td>19 Jan</td><td>13 Feb</td><td>23 days</td><td>13 Feb 2026</td><td style="color:#d63031;font-weight:700">32</td></tr>
+        <tr><td>30</td><td>SRM 7</td><td>8 (S01-S17)</td><td>21 Jan</td><td>16 Feb</td><td>23 days</td><td>16 Feb 2026</td><td style="color:#d63031;font-weight:700">29</td></tr>
+        <tr><td>31</td><td>SRM 6</td><td>8 (S01-S17)</td><td>23 Jan</td><td>18 Feb</td><td>23 days</td><td>18 Feb 2026</td><td style="color:#d63031;font-weight:700">27</td></tr>
+        <tr><td>32</td><td>SRM 5</td><td>8 (S01-S17)</td><td>26 Jan</td><td>12 Mar</td><td>40 days</td><td>4 Mar 2026</td><td style="color:#d63031;font-weight:700">13</td></tr>
+        <tr><td>33</td><td>SRM 4</td><td>8 (S01-S17)</td><td>28 Jan</td><td>12 Mar</td><td>38 days</td><td>4 Mar 2026</td><td style="color:#d63031;font-weight:700">13</td></tr>
+        <tr><td>34</td><td>SRM 3</td><td>8 (S01-S17)</td><td>30 Jan</td><td>12 Mar</td><td>36 days</td><td>4 Mar 2026</td><td style="color:#d63031;font-weight:700">13</td></tr>
+        <tr><td>35</td><td>SRM 2</td><td>8 (S01-S17)</td><td>2 Feb</td><td>12 Mar</td><td>34 days</td><td>4 Mar 2026</td><td style="color:#d63031;font-weight:700">13</td></tr>
+        <tr><td>36</td><td>SRM 1</td><td>8 (S01-S17)</td><td>2 Feb</td><td>12 Mar</td><td>34 days</td><td>4 Mar 2026</td><td style="color:#d63031;font-weight:700">13</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gantt Insights -->
+  <div class="section">
+    <h2>Key Gantt Chart Insights</h2>
+    <div class="two-col">
+      <div>
+        <h3 style="font-size:1rem;margin-bottom:10px;">Concurrent Overlap Pattern</h3>
+        <p style="font-size:0.9rem;color:#555;margin-bottom:8px;">The Gantt shows heavy task overlap — multiple SRMs worked simultaneously within each track. At peak (mid-Jan), up to <strong>12 purple-track SRMs</strong> were planned to be active concurrently, alongside green and blue tasks.</p>
+        <p style="font-size:0.9rem;color:#555;">This means the project requires significant parallel resources. The stall in the purple track may indicate a resource/crew bottleneck after the green and blue tracks were prioritized and completed first.</p>
+      </div>
+      <div>
+        <h3 style="font-size:1rem;margin-bottom:10px;">Duration Escalation in Zone 8</h3>
+        <p style="font-size:0.9rem;color:#555;margin-bottom:8px;">Zone 8's final SRMs (5→1) have unusually long planned durations: <strong>34–40 days each</strong>, compared to 22–23 days for earlier SRMs. All 5 converge on the same end date (12 Mar).</p>
+        <p style="font-size:0.9rem;color:#555;">This "funnel" pattern suggests these final tasks were expected to require extensive parallel work with a hard deadline. With zero progress, this is the most critical bottleneck.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="section">
+    <h2>Project Timeline</h2>
+    <div class="timeline">
+      <div class="tl-item done">
+        <div class="tl-date">24 Nov 2025</div>
+        <div class="tl-title">Project Start — Green Track</div>
+        <div class="tl-desc">Zone 1,2,3,9,4 (SRM 36–35) begins. Multiple SRMs start simultaneously from day 1.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">1 Dec 2025</div>
+        <div class="tl-title">Blue Track Begins — Zone 5 (S18-S29)</div>
+        <div class="tl-desc">Second parallel stream starts while green track is still active.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">22 Dec 2025</div>
+        <div class="tl-title">Purple Track Begins — Zone 6 (S01-S17)</div>
+        <div class="tl-desc">Third parallel stream starts. All 3 tracks now running concurrently.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">12 Jan 2026</div>
+        <div class="tl-title">Green Track Complete</div>
+        <div class="tl-desc">All 18 SRMs in Zone 1,2,3,9,4 finished. SRM 19 (last) inspected 13 Jan.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">26 Jan 2026</div>
+        <div class="tl-title">Blue Track Complete</div>
+        <div class="tl-desc">All 18 SRMs in Zone 5 & 7 finished. Zone 7 SRM 1 inspected 23 Jan.</div>
+      </div>
+      <div class="tl-item done">
+        <div class="tl-date">27 Jan 2026</div>
+        <div class="tl-title">Last Recorded Progress — Purple Track Zone 6 SRM 14</div>
+        <div class="tl-desc">Zone 6 SRM 14 inspected. This is the last completed work in the entire project.</div>
+      </div>
+      <div class="tl-item overdue">
+        <div class="tl-date">31 Jan 2026</div>
+        <div class="tl-title">First Overdue — Zone 6 SRM 13</div>
+        <div class="tl-desc">Planned bar: 7 Jan → 31 Jan (22 days). Task not completed. Purple track stalls.</div>
+      </div>
+      <div class="tl-item overdue">
+        <div class="tl-date">12 Mar 2026</div>
+        <div class="tl-title">Planned Project End (Last Gantt Bar)</div>
+        <div class="tl-desc">Zone 8 SRM 5–1 bars all end here. This was the true final deadline per the Gantt chart.</div>
+      </div>
+      <div class="tl-item active">
+        <div class="tl-date">17 Mar 2026</div>
+        <div class="tl-title">Today — 5 days past last Gantt bar</div>
+        <div class="tl-desc">13 tasks remain. 49 days of no progress.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Risk Assessment -->
+  <div class="section">
+    <h2>Risk Assessment</h2>
+
+    <div class="risk-card risk-high">
+      <strong>HIGH — 49-Day Work Stoppage on Purple Track</strong>
+      The green and blue tracks completed successfully by late January, but the purple track stalled immediately after. No SRM in Zone 6 or Zone 8 has been completed since SRM 14 (inspected 27 Jan). The Gantt shows SRM 13 was already supposed to be in progress from 7 Jan — its planned work bar had been running for 20 days before the stall.
+    </div>
+
+    <div class="risk-card risk-high">
+      <strong>HIGH — Zone 8 (S01-S17) Never Started</strong>
+      All 8 Zone 8 SRMs have 0% progress. Per the Gantt, SRM 8 was supposed to start 19 Jan. The last 5 SRMs (5→1) were planned as long-duration concurrent tasks (34–40 days each), all converging on 12 Mar. This entire zone is untouched.
+    </div>
+
+    <div class="risk-card risk-med">
+      <strong>MEDIUM — Purple Track Was Always the Critical Path</strong>
+      The Gantt reveals the purple track (Zone 6+8) was planned as the longest track: 81 days vs. 50 days (green) and 57 days (blue). It also has the longest per-task durations (avg 26 days vs 10–18 for others). This was inherently the schedule's critical path, and it's the one that failed.
+    </div>
+
+    <div class="risk-card risk-med">
+      <strong>MEDIUM — Heavy Concurrent Overlap Required</strong>
+      The Gantt planned up to 12 purple SRMs active simultaneously. This requires significant parallel resources. If the stall was caused by resource constraints (crews redirected after green/blue completion), the recovery plan must account for this concurrency requirement.
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <div class="section">
+    <h2>Recommendations</h2>
+
+    <div class="risk-card" style="border-color:#0984e3;background:#e8f4fd;">
+      <strong>1. Diagnose the Purple Track Blocker</strong>
+      The stall happened exactly when the green and blue tracks finished (late Jan). Investigate: Was it a resource reallocation issue? Material shortage? Access problem for Zone 6/8 areas? The timing suggests the purple track may have been deprioritized or its resources were shared with the other tracks.
+    </div>
+
+    <div class="risk-card" style="border-color:#0984e3;background:#e8f4fd;">
+      <strong>2. Complete Zone 6 (5 remaining SRMs) First</strong>
+      Zone 6 is half done and its remaining tasks (SRM 13–9) each need ~23 days per the Gantt plan. With the stagger pattern, completing these 5 could take 4–5 weeks if they overlap as planned. This is a quicker win than starting Zone 8 from scratch.
+    </div>
+
+    <div class="risk-card" style="border-color:#0984e3;background:#e8f4fd;">
+      <strong>3. Run Zone 6 and Zone 8 in Parallel (If Resources Allow)</strong>
+      The original Gantt planned these zones to overlap significantly. If sufficient crews/resources are available post-green/blue completion, resuming both zones simultaneously could compress the recovery schedule. The Gantt's overlap pattern shows this was the original intent.
+    </div>
+
+    <div class="risk-card" style="border-color:#0984e3;background:#e8f4fd;">
+      <strong>4. Revised Realistic Completion Estimate</strong>
+      Zone 6 remaining: ~23 days per task with overlap → ~5 weeks. Zone 8: 8 tasks, last 5 are 34–40 day bars → ~6–7 weeks. If run in parallel from today, estimated completion: <strong>late April to early May 2026</strong> — approximately 6–8 weeks behind the original 12 Mar deadline.
+    </div>
+  </div>
+
+  <!-- Summary Table -->
+  <div class="section">
+    <h2>Summary Statistics</h2>
+    <table>
+      <tr><th style="width:50%">Metric</th><th>Value</th></tr>
+      <tr><td>Total SRM tasks</td><td><strong>54</strong> across 5 zones</td></tr>
+      <tr><td>Completed</td><td><strong>41</strong> (75.9%)</td></tr>
+      <tr><td>Remaining (all overdue)</td><td><strong>13</strong> in purple track only</td></tr>
+      <tr><td>Project Gantt span</td><td>24 Nov 2025 → 12 Mar 2026 (109 days)</td></tr>
+      <tr><td>Green track (Zone 1,2,3,9,4)</td><td>18/18 complete | avg 10 days/SRM | span 50 days</td></tr>
+      <tr><td>Blue track (Zone 5+7)</td><td>18/18 complete | avg 18 days/SRM | span 57 days</td></tr>
+      <tr><td>Purple track (Zone 6+8)</td><td>5/18 complete | avg 26 days/SRM | span 81 days</td></tr>
+      <tr><td>Days since last progress</td><td><strong>49 days</strong> (since 27 Jan 2026)</td></tr>
+      <tr><td>Most overdue task</td><td>SRM 13 (Zone 6) — 45 days overdue</td></tr>
+      <tr><td>Longest planned bar</td><td>SRM 5 (Zone 8) — 40 days</td></tr>
+      <tr><td>Max planned concurrency</td><td>Up to 12 SRMs simultaneously (purple track mid-Jan)</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<script>
+// Generate Gantt chart dynamically
+const tasks = [
+  // Green - Zone 1,2,3,9,4
+  {srm:"SRM 36",start:"2025-11-24",end:"2025-11-24",color:"green",status:"Done"},
+  {srm:"SRM 35",start:"2025-11-24",end:"2025-11-24",color:"green",status:"Done"},
+  {srm:"SRM 34",start:"2025-11-24",end:"2025-11-26",color:"green",status:"Done"},
+  {srm:"SRM 33",start:"2025-11-24",end:"2025-11-28",color:"green",status:"Done"},
+  {srm:"SRM 32",start:"2025-11-24",end:"2025-12-01",color:"green",status:"Done"},
+  {srm:"SRM 31",start:"2025-11-24",end:"2025-12-04",color:"green",status:"Done"},
+  {srm:"SRM 30",start:"2025-11-24",end:"2025-12-06",color:"green",status:"Done"},
+  {srm:"SRM 29",start:"2025-11-26",end:"2025-12-09",color:"green",status:"Done"},
+  {srm:"SRM 28",start:"2025-11-28",end:"2025-12-11",color:"green",status:"Done"},
+  {srm:"SRM 27",start:"2025-12-01",end:"2025-12-13",color:"green",status:"Done"},
+  {srm:"SRM 26",start:"2025-12-03",end:"2025-12-16",color:"green",status:"Done"},
+  {srm:"SRM 25",start:"2025-12-05",end:"2025-12-18",color:"green",status:"Done"},
+  {srm:"SRM 24",start:"2025-12-08",end:"2025-12-20",color:"green",status:"Done"},
+  {srm:"SRM 23",start:"2025-12-10",end:"2025-12-23",color:"green",status:"Done"},
+  {srm:"SRM 22",start:"2025-12-12",end:"2025-12-25",color:"green",status:"Done"},
+  {srm:"SRM 21",start:"2025-12-15",end:"2025-12-27",color:"green",status:"Done"},
+  {srm:"SRM 20",start:"2025-12-17",end:"2026-01-07",color:"green",status:"Done"},
+  {srm:"SRM 19",start:"2025-12-19",end:"2026-01-12",color:"green",status:"Done"},
+  // Separator
+  {srm:"---",separator:true,label:"Zone 6 (S01-S17) — Purple"},
+  // Purple - Zone 6
+  {srm:"SRM 18",start:"2025-12-22",end:"2026-01-14",color:"purple",status:"Done"},
+  {srm:"SRM 17",start:"2025-12-24",end:"2026-01-16",color:"purple",status:"Done"},
+  {srm:"SRM 16",start:"2025-12-26",end:"2026-01-21",color:"purple",status:"Done"},
+  {srm:"SRM 15",start:"2026-01-02",end:"2026-01-23",color:"purple",status:"Done"},
+  {srm:"SRM 14",start:"2026-01-05",end:"2026-01-26",color:"purple",status:"Done"},
+  {srm:"SRM 13",start:"2026-01-07",end:"2026-01-31",color:"purple",status:"Overdue"},
+  {srm:"SRM 12",start:"2026-01-09",end:"2026-02-04",color:"purple",status:"Overdue"},
+  {srm:"SRM 11",start:"2026-01-12",end:"2026-02-06",color:"purple",status:"Overdue"},
+  {srm:"SRM 10",start:"2026-01-14",end:"2026-02-09",color:"purple",status:"Overdue"},
+  {srm:"SRM 9",start:"2026-01-16",end:"2026-02-11",color:"purple",status:"Overdue"},
+  // Separator
+  {srm:"---",separator:true,label:"Zone 8 (S01-S17) — Purple"},
+  // Purple - Zone 8
+  {srm:"SRM 8",start:"2026-01-19",end:"2026-02-13",color:"purple",status:"Overdue"},
+  {srm:"SRM 7",start:"2026-01-21",end:"2026-02-16",color:"purple",status:"Overdue"},
+  {srm:"SRM 6",start:"2026-01-23",end:"2026-02-18",color:"purple",status:"Overdue"},
+  {srm:"SRM 5",start:"2026-01-26",end:"2026-03-12",color:"purple",status:"Overdue"},
+  {srm:"SRM 4",start:"2026-01-28",end:"2026-03-12",color:"purple",status:"Overdue"},
+  {srm:"SRM 3",start:"2026-01-30",end:"2026-03-12",color:"purple",status:"Overdue"},
+  {srm:"SRM 2",start:"2026-02-02",end:"2026-03-12",color:"purple",status:"Overdue"},
+  {srm:"SRM 1",start:"2026-02-02",end:"2026-03-12",color:"purple",status:"Overdue"},
+  // Separator
+  {srm:"---",separator:true,label:"Zone 5 (S18-S29) — Blue"},
+  // Blue - Zone 5
+  {srm:"SRM 18",start:"2025-12-15",end:"2025-12-16",color:"blue",status:"Done"},
+  {srm:"SRM 17",start:"2025-12-01",end:"2025-12-16",color:"blue",status:"Done"},
+  {srm:"SRM 16",start:"2025-12-03",end:"2025-12-16",color:"blue",status:"Done"},
+  {srm:"SRM 15",start:"2025-12-05",end:"2025-12-22",color:"blue",status:"Done"},
+  {srm:"SRM 14",start:"2025-12-08",end:"2025-12-22",color:"blue",status:"Done"},
+  {srm:"SRM 13",start:"2025-12-08",end:"2025-12-22",color:"blue",status:"Done"},
+  {srm:"SRM 12",start:"2025-12-09",end:"2026-01-08",color:"blue",status:"Done"},
+  {srm:"SRM 11",start:"2025-12-10",end:"2026-01-08",color:"blue",status:"Done"},
+  {srm:"SRM 10",start:"2025-12-10",end:"2026-01-08",color:"blue",status:"Done"},
+  {srm:"SRM 9",start:"2025-12-12",end:"2026-01-13",color:"blue",status:"Done"},
+  // Separator
+  {srm:"---",separator:true,label:"Zone 7 (S18-S29) — Blue"},
+  // Blue - Zone 7
+  {srm:"SRM 8",start:"2025-12-15",end:"2026-01-13",color:"blue",status:"Done"},
+  {srm:"SRM 7",start:"2025-12-17",end:"2026-01-13",color:"blue",status:"Done"},
+  {srm:"SRM 6",start:"2025-12-19",end:"2026-01-22",color:"blue",status:"Done"},
+  {srm:"SRM 5",start:"2025-12-22",end:"2026-01-26",color:"blue",status:"Done"},
+  {srm:"SRM 4",start:"2025-12-24",end:"2026-01-26",color:"blue",status:"Done"},
+  {srm:"SRM 3",start:"2025-12-26",end:"2026-01-26",color:"blue",status:"Done"},
+  {srm:"SRM 2",start:"2026-01-03",end:"2026-01-22",color:"blue",status:"Done"},
+  {srm:"SRM 1",start:"2026-01-07",end:"2026-01-22",color:"blue",status:"Done"},
+];
+
+// Build date range: Nov 23 2025 to Mar 17 2026
+const startDate = new Date(2025, 10, 23); // Nov 23
+const endDate = new Date(2026, 2, 17); // Mar 17
+const today = new Date(2026, 2, 17);
+const dates = [];
+let d = new Date(startDate);
+while (d <= endDate) {
+  dates.push(new Date(d));
+  d.setDate(d.getDate() + 1);
+}
+
+const colorMap = {green:'#92D050',purple:'#7030A0',blue:'#00B0F0'};
+const tbody = document.getElementById('gantt-body');
+
+tasks.forEach(task => {
+  const tr = document.createElement('tr');
+
+  if (task.separator) {
+    tr.innerHTML = `<td colspan="${dates.length + 2}" style="background:#f0f0f0;font-weight:700;font-size:0.8rem;padding:6px 8px;color:#555;">${task.label}</td>`;
+    tbody.appendChild(tr);
+    return;
+  }
+
+  const srmTd = document.createElement('td');
+  srmTd.className = 'srm-cell';
+  srmTd.textContent = task.srm;
+  if (task.status === 'Overdue') srmTd.style.color = '#d63031';
+  tr.appendChild(srmTd);
+
+  const statusTd = document.createElement('td');
+  statusTd.className = 'srm-cell';
+  statusTd.style.minWidth = '50px';
+  statusTd.innerHTML = task.status === 'Done'
+    ? '<span style="color:#155724;font-size:0.7rem;">Done</span>'
+    : '<span style="color:#d63031;font-size:0.7rem;font-weight:700;">Overdue</span>';
+  tr.appendChild(statusTd);
+
+  const taskStart = new Date(task.start);
+  const taskEnd = new Date(task.end);
+
+  dates.forEach(date => {
+    const td = document.createElement('td');
+    td.style.padding = '2px 0';
+    td.style.minWidth = '8px';
+    td.style.maxWidth = '8px';
+
+    const isSunday = date.getDay() === 0;
+    const isToday = date.getTime() === today.getTime();
+
+    if (isToday) {
+      td.style.background = '#fff3cd';
+      td.style.borderLeft = '2px solid #ffc107';
+      td.style.borderRight = '2px solid #ffc107';
+    } else if (isSunday) {
+      td.style.background = '#fff0f0';
+    }
+
+    if (date >= taskStart && date <= taskEnd && !isSunday) {
+      const bar = document.createElement('div');
+      bar.style.background = colorMap[task.color];
+      bar.style.height = '14px';
+      bar.style.borderRadius = '1px';
+      bar.style.opacity = task.status === 'Overdue' ? '0.5' : '1';
+      td.appendChild(bar);
+    }
+
+    tr.appendChild(td);
+  });
+
+  tbody.appendChild(tr);
+});
+</script>
+
+</body>
+</html>
