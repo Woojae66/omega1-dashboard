@@ -460,9 +460,9 @@ document.getElementById('pwInput').focus();
     <strong>BJC Claim Alert:</strong> &#3647;3,906,010 potential claim across 8 vendors / 50 transactions. Top 2 vendors (#1 ALLY X LAB + #2 Grand Ocean) account for 91.8% of all spend &mdash; extreme concentration risk.
   </div>
   <div style="margin-top:8px;display:flex;gap:10px">
-    <a class="dl-btn" href="../Finance/AXL_Cost_Control_Dashboard.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Full Cost Control Dashboard</a>
-    <a class="dl-btn" href="../Schedules_Planner_Analysis.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Schedule A Detail</a>
-    <a class="dl-btn" href="../Schedule_BuildingB_Analysis.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Schedule B Detail</a>
+    <a class="dl-btn" href="Finance/AXL_Cost_Control_Dashboard.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Full Cost Control Dashboard</a>
+    <a class="dl-btn" href="Schedules_Planner_Analysis.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Schedule A Detail</a>
+    <a class="dl-btn" href="Schedule_BuildingB_Analysis.html" style="background:var(--g100);color:var(--g800);font-size:11px" target="_blank">&#9654; Schedule B Detail</a>
   </div>
 </div></div>
 
@@ -616,7 +616,7 @@ function showDay(){
   const dt=document.getElementById('dayPick').value,d=DD[dt],el=document.getElementById('dayContent'),drpEl=document.getElementById('dayDRP');
   if(!d){el.innerHTML='<p style="color:var(--g400);padding:20px">No data for this date.</p>';drpEl.textContent='';return;}
   const drpKey='DRP-'+String(d.drp).padStart(4,'0');
-  drpEl.textContent=drpKey+' &bull; '+dt;
+  drpEl.innerHTML=drpKey+' &bull; '+dt;
   const photos=PH[drpKey]||[];
   let h='';
   ['A','B'].forEach(bk=>{
