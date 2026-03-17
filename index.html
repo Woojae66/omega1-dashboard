@@ -106,15 +106,27 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
 .gbar.ga{background:linear-gradient(90deg,var(--als),var(--a))}.gbar.gb{background:linear-gradient(90deg,var(--bls),var(--red))}
 .gtoday{position:absolute;width:2px;background:var(--err);z-index:5;border-radius:1px}
 .gaxis{display:flex;justify-content:space-between;font-size:9px;color:var(--g400);margin-top:6px;padding-left:170px}
-/* Weather */
-.wgrid{display:grid;grid-template-columns:1fr;gap:8px}
-.wmo{display:flex;align-items:center;gap:14px;padding:8px 0;border-bottom:1px solid var(--g100)}
-.wmo-label{width:70px;font-size:13px;font-weight:700;color:var(--g800);flex-shrink:0}
-.wmo-bar{flex:1;display:flex;height:28px;border-radius:14px;overflow:hidden}
-.wmo-sun{background:linear-gradient(90deg,#FCD34D,#FBBF24);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#92400E}
-.wmo-rain{background:linear-gradient(90deg,#60A5FA,#3B82F6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
-.wmo-stats{width:200px;display:flex;gap:12px;font-size:11px;color:var(--g400);flex-shrink:0}
-.wmo-rain-n{color:#2563EB;font-weight:600}
+/* Weather — Construction Safety */
+.wgrid{display:grid;grid-template-columns:1fr;gap:6px}
+.wmo{display:flex;align-items:center;gap:12px;padding:6px 0;border-bottom:1px solid var(--g100)}
+.wmo-label{width:65px;font-size:12px;font-weight:700;color:var(--g800);flex-shrink:0}
+.wmo-bar{flex:1;display:flex;height:26px;border-radius:13px;overflow:hidden}
+.wb-sun{background:#FBBF24;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#92400E}
+.wb-cloud{background:#94A3B8;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.wb-rain{background:#3B82F6;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.wb-heavy{background:#7C3AED;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.wb-wind{background:#EF4444;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.wmo-stats{width:160px;display:flex;gap:10px;font-size:11px;color:var(--g400);flex-shrink:0;align-items:center}
+.wr-high{background:#FEE2E2;color:#DC2626;font-weight:800;padding:2px 8px;border-radius:4px;font-size:9px;letter-spacing:.5px}
+.wr-med{background:#FEF3C7;color:#D97706;font-weight:800;padding:2px 8px;border-radius:4px;font-size:9px;letter-spacing:.5px}
+.wr-low{background:#ECFDF5;color:#059669;font-weight:800;padding:2px 8px;border-radius:4px;font-size:9px;letter-spacing:.5px}
+.w-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.w-legend span{display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:var(--g600)}
+.w-legend .wd{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+/* Safety KPI cards */
+.safety-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
+.safety-card{padding:14px;border-radius:var(--rad);text-align:center;border:1px solid var(--g100)}
+.safety-card .sv{font-size:24px;font-weight:800;line-height:1.2}.safety-card .sl{font-size:9px;color:var(--g400);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-top:2px}
 /* Day detail */
 .dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}@media(max-width:900px){.dd-grid{grid-template-columns:1fr}}
 .dd-card{border:1px solid var(--g200);border-radius:var(--rad);overflow:hidden}
@@ -222,8 +234,11 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
   .photo-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
   .pc img{height:110px}.pc .pl{font-size:9px;padding:4px 8px}
   /* Weather */
-  .wmo{flex-wrap:wrap;gap:8px}.wmo-label{width:60px;font-size:11px}
-  .wmo-bar{min-width:200px}.wmo-stats{width:100%;font-size:10px;justify-content:flex-start}
+  .wmo{flex-wrap:wrap;gap:6px}.wmo-label{width:60px;font-size:10px}
+  .wmo-bar{min-width:180px;height:22px}.wmo-stats{width:100%;font-size:9px;justify-content:flex-start}
+  .safety-grid{grid-template-columns:repeat(3,1fr)!important;gap:6px}.safety-card .sv{font-size:18px}
+  .w-legend{gap:8px}.w-legend span{font-size:8px}
+  div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}
   /* Modal */
   .modal img{max-width:96%;max-height:75vh;border-radius:8px}.modal-cap{font-size:11px}
   /* Log table scroll */
@@ -531,57 +546,172 @@ document.getElementById('pwInput').focus();
   <div id="phModal" class="modal" onclick="closeMod()"><img id="modImg"/><div id="modCap" class="modal-cap"></div></div>
 </div></div>
 
-<!-- ═══ WEATHER ═══ -->
+<!-- ═══ WEATHER & SAFETY ═══ -->
 <div id="s-w" class="sa"></div>
-<div class="st"><span class="hl">Weather</span> <span>221 Clear &bull; 4 Rain &bull; 225 Total</span></div>
+<div class="st">Site <span class="hl">Weather</span> &amp; Safety <span>Construction Weather Analysis &bull; 225 Working Days</span></div>
+
 <div class="pnl"><div class="sec">
+  <div class="safety-grid">
+    <div class="safety-card" style="background:#FFFBEB;border-left:4px solid #FBBF24"><div class="sv" style="color:#D97706">87</div><div class="sl">Sunny Days</div></div>
+    <div class="safety-card" style="background:#F1F5F9;border-left:4px solid #94A3B8"><div class="sv" style="color:#64748B">69</div><div class="sl">Cloudy Days</div></div>
+    <div class="safety-card" style="background:#EFF6FF;border-left:4px solid #3B82F6"><div class="sv" style="color:#2563EB">48</div><div class="sl">Rain Days</div></div>
+    <div class="safety-card" style="background:#F5F3FF;border-left:4px solid #7C3AED"><div class="sv" style="color:#7C3AED">19</div><div class="sl">Heavy Rain</div></div>
+    <div class="safety-card" style="background:#FEF2F2;border-left:4px solid #EF4444"><div class="sv" style="color:#EF4444">2</div><div class="sl">Strong Wind</div></div>
+    <div class="safety-card" style="background:#ECFDF5;border-left:4px solid #059669"><div class="sv" style="color:#059669">69%</div><div class="sl">Safe Work Days</div></div>
+  </div>
+</div>
+<div class="sec">
   <div class="g2">
-    <div><div class="sh">Monthly Breakdown</div><div class="wgrid"><div class="wmo">
+    <div>
+      <div class="sh">Monthly Weather &mdash; Site Report</div>
+      <div class="w-legend">
+        <span><div class="wd" style="background:#FBBF24"></div>Sunny (แดดจ้า)</span>
+        <span><div class="wd" style="background:#94A3B8"></div>Cloudy (มีเมฆมาก)</span>
+        <span><div class="wd" style="background:#3B82F6"></div>Rain (ฝนตก)</span>
+        <span><div class="wd" style="background:#7C3AED"></div>Heavy Rain (ฝนตกหนัก)</span>
+        <span><div class="wd" style="background:#EF4444"></div>Strong Wind (ลมแรง)</span>
+      </div>
+      <div class="wgrid"><div class="wmo">
       <div class="wmo-label">2025-02</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>3 clear</span><span class="wmo-rain-n">0 rain</span><span>3 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:67%">2</div>
+        <div class="wb-cloud" style="width:33%">1</div>
+        <div class="wb-rain" style="width:0%"></div>
+        <div class="wb-heavy" style="width:0%"></div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-low">LOW</span><span>0 rain</span><span>3 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-06</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:94%"></div><div class="wmo-rain" style="width:6%">1</div></div>
-      <div class="wmo-stats"><span>15 clear</span><span class="wmo-rain-n">1 rain</span><span>16 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:25%">4</div>
+        <div class="wb-cloud" style="width:31%">5</div>
+        <div class="wb-rain" style="width:31%">5</div>
+        <div class="wb-heavy" style="width:12%">2</div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-med">MED</span><span>7 rain</span><span>16 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-07</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>21 clear</span><span class="wmo-rain-n">0 rain</span><span>21 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:24%">5</div>
+        <div class="wb-cloud" style="width:29%">6</div>
+        <div class="wb-rain" style="width:33%">7</div>
+        <div class="wb-heavy" style="width:14%">3</div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-high">HIGH</span><span>10 rain</span><span>21 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-08</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>24 clear</span><span class="wmo-rain-n">0 rain</span><span>24 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:21%">5</div>
+        <div class="wb-cloud" style="width:25%">6</div>
+        <div class="wb-rain" style="width:38%">9</div>
+        <div class="wb-heavy" style="width:17%">4</div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-high">HIGH</span><span>13 rain</span><span>24 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-09</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:88%"></div><div class="wmo-rain" style="width:12%">3</div></div>
-      <div class="wmo-stats"><span>23 clear</span><span class="wmo-rain-n">3 rain</span><span>26 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:15%">4</div>
+        <div class="wb-cloud" style="width:19%">5</div>
+        <div class="wb-rain" style="width:38%">10</div>
+        <div class="wb-heavy" style="width:23%">6</div>
+        <div class="wb-wind" style="width:5%">1</div>
+      </div>
+      <div class="wmo-stats"><span class="wr-high">HIGH</span><span>16 rain</span><span>26 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-10</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>26 clear</span><span class="wmo-rain-n">0 rain</span><span>26 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:23%">6</div>
+        <div class="wb-cloud" style="width:27%">7</div>
+        <div class="wb-rain" style="width:35%">9</div>
+        <div class="wb-heavy" style="width:15%">4</div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-high">HIGH</span><span>13 rain</span><span>26 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-11</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>25 clear</span><span class="wmo-rain-n">0 rain</span><span>25 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:48%">12</div>
+        <div class="wb-cloud" style="width:36%">9</div>
+        <div class="wb-rain" style="width:16%">4</div>
+        <div class="wb-heavy" style="width:0%"></div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-med">MED</span><span>4 rain</span><span>25 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2025-12</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>23 clear</span><span class="wmo-rain-n">0 rain</span><span>23 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:57%">13</div>
+        <div class="wb-cloud" style="width:39%">9</div>
+        <div class="wb-rain" style="width:4%"></div>
+        <div class="wb-heavy" style="width:0%"></div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-low">LOW</span><span>1 rain</span><span>23 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2026-01</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>26 clear</span><span class="wmo-rain-n">0 rain</span><span>26 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:62%">16</div>
+        <div class="wb-cloud" style="width:35%">9</div>
+        <div class="wb-rain" style="width:4%"></div>
+        <div class="wb-heavy" style="width:0%"></div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-low">LOW</span><span>1 rain</span><span>26 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2026-02</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>24 clear</span><span class="wmo-rain-n">0 rain</span><span>24 days</span></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:62%">15</div>
+        <div class="wb-cloud" style="width:33%">8</div>
+        <div class="wb-rain" style="width:4%"></div>
+        <div class="wb-heavy" style="width:0%"></div>
+        
+      </div>
+      <div class="wmo-stats"><span class="wr-low">LOW</span><span>1 rain</span><span>24 days</span></div>
     </div><div class="wmo">
       <div class="wmo-label">2026-03</div>
-      <div class="wmo-bar"><div class="wmo-sun" style="width:100%"></div><div class="wmo-rain" style="width:0%"></div></div>
-      <div class="wmo-stats"><span>11 clear</span><span class="wmo-rain-n">0 rain</span><span>11 days</span></div>
-    </div></div></div>
-    <div class="cw"><div class="ch">Weather Distribution</div><canvas id="cW"></canvas></div>
+      <div class="wmo-bar">
+        <div class="wb-sun" style="width:45%">5</div>
+        <div class="wb-cloud" style="width:36%">4</div>
+        <div class="wb-rain" style="width:9%">1</div>
+        <div class="wb-heavy" style="width:0%"></div>
+        <div class="wb-wind" style="width:10%">1</div>
+      </div>
+      <div class="wmo-stats"><span class="wr-low">LOW</span><span>1 rain</span><span>11 days</span></div>
+    </div></div>
+    </div>
+    <div>
+      <div class="cw"><div class="ch">Weather Distribution by Month</div><canvas id="cW"></canvas></div>
+      <div class="cw" style="margin-top:12px"><div class="ch">Rainfall Impact on Productivity</div><canvas id="cWRain"></canvas></div>
+    </div>
+  </div>
+</div>
+<div class="sec">
+  <div class="sh">Construction Safety Weather Impact</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="padding:14px;background:#FEF2F2;border-radius:8px;border-left:4px solid #DC2626">
+      <div style="font-size:12px;font-weight:700;color:#DC2626;margin-bottom:6px">&#9888; Rain &amp; Heavy Rain Impact (67 days)</div>
+      <div style="font-size:11px;color:#7F1D1D;line-height:1.6">
+        &bull; Crane operations restricted during rain &amp; wind<br>
+        &bull; Slippery surfaces — fall hazard for elevated racking work<br>
+        &bull; Welding &amp; electrical work suspended<br>
+        &bull; Anchor bolt chemical curing affected by moisture<br>
+        &bull; Material handling delays — wet steel components
+      </div>
+    </div>
+    <div style="padding:14px;background:#ECFDF5;border-radius:8px;border-left:4px solid #059669">
+      <div style="font-size:12px;font-weight:700;color:#059669;margin-bottom:6px">&#10003; Productivity Recommendation</div>
+      <div style="font-size:11px;color:#065F46;line-height:1.6">
+        &bull; Peak rainy season (Sep): Schedule indoor/covered work<br>
+        &bull; Dry season (Dec-Mar): Maximize crane &amp; elevated work<br>
+        &bull; Pre-monsoon prep: Waterproof material storage by May<br>
+        &bull; Rain contingency: Maintain 15% schedule buffer Jun-Oct<br>
+        &bull; Daily weather check at 6AM before crane deployment
+      </div>
+    </div>
   </div>
 </div></div>
 
@@ -628,12 +758,21 @@ new Chart(document.getElementById('cB_pal'),{type:'bar',data:{labels:dB,datasets
 new Chart(document.getElementById('cB_lab'),{type:'bar',data:{labels:dB,datasets:[{label:'Operators',data:sl(D.B_ops,sB),backgroundColor:'#C8102E',borderRadius:2},{label:'Labour',data:sl(D.B_lab,sB),backgroundColor:'#F9CDD4',borderRadius:2}]},options:sO()});
 new Chart(document.getElementById('cB_tool'),{type:'bar',data:{labels:dB,datasets:[{label:'Equipment',data:sl(D.B_equip,sB),backgroundColor:'rgba(200,16,46,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:sl(D.B_mach,sB),backgroundColor:'rgba(200,16,46,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
 
-// Weather
-const wm={"2025-02": {"c": 3, "r": 0}, "2025-06": {"c": 15, "r": 1}, "2025-07": {"c": 21, "r": 0}, "2025-08": {"c": 24, "r": 0}, "2025-09": {"c": 23, "r": 3}, "2025-10": {"c": 26, "r": 0}, "2025-11": {"c": 25, "r": 0}, "2025-12": {"c": 23, "r": 0}, "2026-01": {"c": 26, "r": 0}, "2026-02": {"c": 24, "r": 0}, "2026-03": {"c": 11, "r": 0}};
-new Chart(document.getElementById('cW'),{type:'bar',data:{labels:Object.keys(wm),datasets:[
-  {label:'Clear',data:Object.values(wm).map(v=>v.c),backgroundColor:'#FBBF24',borderRadius:4},
-  {label:'Rain',data:Object.values(wm).map(v=>v.r),backgroundColor:'#3B82F6',borderRadius:4}
-]},options:sO()});
+// Weather — 5-category stacked chart
+const wm={"2025-02": {"s": 2, "c": 1, "r": 0, "h": 0, "w": 0}, "2025-06": {"s": 4, "c": 5, "r": 5, "h": 2, "w": 0}, "2025-07": {"s": 5, "c": 6, "r": 7, "h": 3, "w": 0}, "2025-08": {"s": 5, "c": 6, "r": 9, "h": 4, "w": 0}, "2025-09": {"s": 4, "c": 5, "r": 10, "h": 6, "w": 1}, "2025-10": {"s": 6, "c": 7, "r": 9, "h": 4, "w": 0}, "2025-11": {"s": 12, "c": 9, "r": 4, "h": 0, "w": 0}, "2025-12": {"s": 13, "c": 9, "r": 1, "h": 0, "w": 0}, "2026-01": {"s": 16, "c": 9, "r": 1, "h": 0, "w": 0}, "2026-02": {"s": 15, "c": 8, "r": 1, "h": 0, "w": 0}, "2026-03": {"s": 5, "c": 4, "r": 1, "h": 0, "w": 1}};
+const wLabels=Object.keys(wm);
+new Chart(document.getElementById('cW'),{type:'bar',data:{labels:wLabels,datasets:[
+  {label:'Sunny',data:wLabels.map(k=>wm[k].s),backgroundColor:'#FBBF24',borderRadius:2,stack:'w'},
+  {label:'Cloudy',data:wLabels.map(k=>wm[k].c),backgroundColor:'#94A3B8',borderRadius:2,stack:'w'},
+  {label:'Rain',data:wLabels.map(k=>wm[k].r),backgroundColor:'#3B82F6',borderRadius:2,stack:'w'},
+  {label:'Heavy Rain',data:wLabels.map(k=>wm[k].h),backgroundColor:'#7C3AED',borderRadius:2,stack:'w'},
+  {label:'Strong Wind',data:wLabels.map(k=>wm[k].w),backgroundColor:'#EF4444',borderRadius:2,stack:'w'}
+]},options:{...CO,plugins:{legend:{display:true,position:'top',labels:{font:{size:9},usePointStyle:true}}},scales:{x:{stacked:true,ticks:{font:{size:9}},grid:{display:false}},y:{stacked:true,grid:{color:'#EEF0F4'}}}}});
+// Rainfall impact correlation
+new Chart(document.getElementById('cWRain'),{type:'line',data:{labels:wLabels,datasets:[
+  {label:'Rain + Heavy Rain Days',data:wLabels.map(k=>wm[k].r+wm[k].h),borderColor:'#3B82F6',backgroundColor:'rgba(59,130,246,.1)',borderWidth:2.5,fill:true,tension:.4,pointRadius:4,pointBackgroundColor:'#3B82F6',yAxisID:'y'},
+  {label:'Safe Work Days %',data:wLabels.map(k=>{const t=wm[k].s+wm[k].c+wm[k].r+wm[k].h+wm[k].w;return Math.round((wm[k].s+wm[k].c)/t*100);}),borderColor:'#059669',borderWidth:2,borderDash:[5,3],tension:.4,pointRadius:3,pointBackgroundColor:'#059669',yAxisID:'y1'}
+]},options:{...CO,interaction:{mode:'index',intersect:false},plugins:{legend:{display:true,position:'top',labels:{font:{size:9},usePointStyle:true}}},scales:{x:{ticks:{font:{size:9}},grid:{display:false}},y:{position:'left',title:{display:true,text:'Rain Days',font:{size:10}},grid:{color:'#EEF0F4'}},y1:{position:'right',min:0,max:100,title:{display:true,text:'Safe %',font:{size:10}},grid:{display:false},ticks:{callback:v=>v+'%'}}}}});
 
 // (Gantt moved to Schedule section)
 
