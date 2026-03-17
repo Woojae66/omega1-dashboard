@@ -23,6 +23,11 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
 .hdr .sub{font-size:10px;color:var(--g400);margin-top:3px;font-weight:500;letter-spacing:.3px;text-transform:uppercase}
 .hdr .right{display:flex;gap:10px;align-items:center}
 .badge{background:var(--red);color:#fff;padding:5px 16px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase}
+/* Header Live Camera */
+.hdr-live{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;background:#1A1A2E;color:#fff;text-decoration:none;font-size:11px;font-weight:700;transition:all .2s;border:1px solid #2D2D4A}
+.hdr-live:hover{background:#2D2D4A;box-shadow:0 0 16px rgba(200,16,46,.3);transform:translateY(-1px)}
+.hdr-live-badge{background:#C8102E;color:#fff;font-size:8px;font-weight:800;padding:2px 6px;border-radius:3px;letter-spacing:1px}
+.hdr-live-txt{color:#fff;font-size:11px}
 .dl-btn{padding:7px 18px;border-radius:8px;font-size:11px;font-weight:700;text-decoration:none;background:var(--g100);color:var(--g800);transition:.2s;display:inline-flex;align-items:center;gap:5px;border:1px solid var(--g200)}
 .dl-btn:hover{background:var(--g200);transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
 /* Container */
@@ -266,7 +271,8 @@ document.getElementById('pwInput').focus();
     <div><h1>OMEGA1 <span class="hl">BANGNA</span> WAREHOUSE</h1><div class="sub">Racking Project Dashboard &nbsp;&bull;&nbsp; 2025-02-04 to 2026-03-13 &nbsp;&bull;&nbsp; 225 Working Days &nbsp;&bull;&nbsp; 17 Mar 2026</div></div>
   </div>
   <div class="right">
-    <a class="dl-btn" href="OMEGA1_Raw_Data.xlsx" download>&#9662; Raw Data (.xlsx)</a>
+    <a class="hdr-live" href="https://www.thaisky-digital.com/timelapse/074_ally/index.html" target="_blank"><span class="live-pulse"></span><span class="hdr-live-badge">LIVE</span><span class="hdr-live-txt">Site Camera</span></a>
+    <a class="dl-btn" href="OMEGA1_Raw_Data.xlsx" download>&#9662; Raw Data</a>
     <div class="badge">EXECUTIVE DASHBOARD</div>
   </div>
 </div></div>
