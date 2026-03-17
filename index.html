@@ -128,6 +128,17 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
 .pc img{width:100%;height:150px;object-fit:cover;display:block}.pc .pl{padding:6px 10px;font-size:10px;color:var(--g400);font-weight:500}
 .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.88);z-index:1000;justify-content:center;align-items:center;flex-direction:column;cursor:pointer}
 .modal.open{display:flex}.modal img{max-width:92%;max-height:82vh;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.3)}.modal-cap{color:rgba(255,255,255,.7);margin-top:12px;font-size:13px}
+/* Live Camera Button */
+.live-cam{display:flex;align-items:center;gap:12px;padding:16px 24px;background:linear-gradient(135deg,#1A1A2E 0%,#2D2D4A 100%);border-radius:14px;text-decoration:none;transition:all .3s;position:relative;overflow:hidden;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.15)}
+.live-cam:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(200,16,46,.25);background:linear-gradient(135deg,#2D2D4A 0%,#3A3A5E 100%)}
+.live-cam::after{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.03),transparent);transform:rotate(25deg);transition:.5s}
+.live-cam:hover::after{right:120%}
+.live-pulse{width:10px;height:10px;background:#FF3B3B;border-radius:50%;flex-shrink:0;animation:pulse 1.5s ease-in-out infinite;box-shadow:0 0 8px rgba(255,59,59,.6)}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+.live-badge{background:#C8102E;color:#fff;font-size:9px;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:1.2px;flex-shrink:0;text-transform:uppercase}
+.live-txt{color:#fff;font-size:15px;font-weight:700;letter-spacing:.3px}
+.live-sub{color:rgba(255,255,255,.5);font-size:11px;font-weight:500;margin-left:auto}
+@media(max-width:768px){.live-cam{flex-wrap:wrap;padding:12px 16px;gap:8px}.live-txt{font-size:13px}.live-sub{width:100%;margin-left:0;font-size:10px}}
 /* Log */
 .act{text-align:left!important;font-size:10px;color:var(--g600);max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rain-w{color:#2563EB;font-weight:600;background:#EFF6FF}
@@ -386,7 +397,14 @@ document.getElementById('pwInput').focus();
           <div class="zpct" style="color:#DC2626">0.0%</div>
           <div class="zinfo">11,814 pal</div></div></div>
 <div class="sec"><div class="sh"><div class="dot dot-b"></div>Manpower &mdash; DRP-0271</div><div class="res-grid"><div class="res-card"><div class="res-hdr rb">Operators<span class="res-count">7</span></div><div class="res-body"><div class="res-row"><span>Site Engineer</span><span class="res-val">2</span></div><div class="res-row"><span>Project Manager</span><span class="res-val">1</span></div><div class="res-row"><span>Project Engineer</span><span class="res-val">1</span></div><div class="res-row"><span>Procurement Officer</span><span class="res-val">1</span></div><div class="res-row"><span>Safety Officer</span><span class="res-val">1</span></div><div class="res-row"><span>Supervisor</span><span class="res-val">1</span></div></div></div><div class="res-card"><div class="res-hdr rb">Labour<span class="res-count">124</span></div><div class="res-body"><div class="res-row"><span>Labour</span><span class="res-val">122</span></div><div class="res-row"><span>Rigger</span><span class="res-val">2</span></div></div></div><div class="res-card"><div class="res-hdr rb">Equipment<span class="res-count">2</span></div><div class="res-body"><div class="res-row"><span>Electric Drill</span><span class="res-val">2</span></div></div></div><div class="res-card"><div class="res-hdr rb">Machine<span class="res-count">12</span></div><div class="res-body"><div class="res-row"><span>Coring Machine</span><span class="res-val">7</span></div><div class="res-row"><span>Forklift 3T</span><span class="res-val">2</span></div><div class="res-row"><span>Crane 60T</span><span class="res-val">1</span></div><div class="res-row"><span>Truck 6W</span><span class="res-val">1</span></div><div class="res-row"><span>Crane 50T</span><span class="res-val">1</span></div></div></div></div></div>
-<div class="sec" style="margin-top:8px"><a class="dl-btn" href="https://www.thaisky-digital.com/timelapse/074_ally/index.html" style="background:var(--red);color:#fff;font-size:12px;font-weight:700;border:none" target="_blank">&#9654; Building B Live Timelapse Camera</a></div>
+<div class="sec" style="margin-top:16px">
+  <a class="live-cam" href="https://www.thaisky-digital.com/timelapse/074_ally/index.html" target="_blank">
+    <span class="live-pulse"></span>
+    <span class="live-badge">LIVE</span>
+    <span class="live-txt">Building B Site Camera</span>
+    <span class="live-sub">Watch real-time construction timelapse &#8594;</span>
+  </a>
+</div>
 </div>
 
 <div class="g2">
