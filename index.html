@@ -173,6 +173,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
 .pw-err{color:var(--red);font-size:12px;margin-top:10px;display:none;font-weight:600}
 .pw-tagline{font-size:11px;color:var(--g300);margin-top:32px;letter-spacing:1px;text-transform:uppercase}
 
+/* Weekly summary responsive */
+.wk-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 /* ═══ RESPONSIVE — TABLET ═══ */
 @media(max-width:1024px){
   .ct{padding:16px 18px}
@@ -247,6 +249,8 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--g50);
   .sch-grid{grid-template-columns:1fr!important}
   /* Cost control */
   .cost-kpi{grid-template-columns:1fr 1fr!important;gap:8px}
+  /* Weekly summary */
+  .wk-grid{grid-template-columns:1fr!important;gap:10px}
 }
 @media(max-width:480px){
   .kpi-strip{grid-template-columns:repeat(2,1fr);gap:6px}
@@ -298,10 +302,54 @@ document.getElementById('pwInput').focus();
   <div class="kpi kn"><div class="kv va">DRP-0271</div><div class="kl">Latest Report</div></div>
   <div class="kpi ka"><div class="kv vg">100%</div><div class="kl">Bldg A &mdash; ASRS</div><div class="ku">75,570 pallets</div></div>
   <div class="kpi ka"><div class="kv vg">100%</div><div class="kl">Bldg A &mdash; Anchor</div><div class="ku">19,024 holes</div></div>
+  <div class="kpi ka"><div class="kv vo">93.1%</div><div class="kl">Bldg A &mdash; Handover</div><div class="ku">72 aisles</div></div>
   <div class="kpi kb"><div class="kv vo">27.4%</div><div class="kl">Bldg B &mdash; ASRS</div><div class="ku">17,964 / 65,560 pal</div></div>
   <div class="kpi kb"><div class="kv vo">35.8%</div><div class="kl">Bldg B &mdash; Anchor</div><div class="ku">5,976 / 16,704 holes</div></div>
   <div class="kpi kb"><div class="kv vb">7.1%</div><div class="kl">Bldg B &mdash; Handover</div><div class="ku">56 aisles</div></div>
   <div class="kpi kn"><div class="kv va">2,068</div><div class="kl">Site Photos</div></div>
+</div>
+
+<!-- ═══ WEEKLY SUMMARY ═══ -->
+<div class="pnl" style="margin-bottom:18px;border:2px solid var(--g200);background:linear-gradient(135deg,#FAFBFF 0%,#FFF 100%)">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <div style="font-size:15px;font-weight:800;color:var(--g800);text-transform:uppercase;letter-spacing:.3px">Weekly Update</div>
+    <div style="font-size:10px;color:var(--g400);font-weight:600">Quick Status Comparison</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="wk-grid">
+    <!-- Last Week -->
+    <div style="border-radius:10px;border:1px solid var(--g200);overflow:hidden">
+      <div style="background:var(--g100);padding:10px 16px;font-size:12px;font-weight:700;color:var(--g600);display:flex;justify-content:space-between;align-items:center">
+        <span>Last Week</span><span style="font-weight:500;font-size:11px">02 Mar — 08 Mar &bull; 6 days</span>
+      </div>
+      <div style="padding:12px 16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B Pallets</div><div style="font-size:20px;font-weight:800;color:var(--b)">3,682</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B AB Holes</div><div style="font-size:20px;font-weight:800;color:var(--warn)">784</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B ASRS Progress</div><div style="font-size:16px;font-weight:800;color:var(--b)">22.0%</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B AB Progress</div><div style="font-size:16px;font-weight:800;color:var(--warn)">31.1%</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">Avg Operators</div><div style="font-size:16px;font-weight:800;color:var(--a)">7</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">Avg Labour</div><div style="font-size:16px;font-weight:800;color:var(--a)">85</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- This Week -->
+    <div style="border-radius:10px;border:2px solid var(--red);overflow:hidden;position:relative">
+      <div style="position:absolute;top:8px;right:10px;background:var(--red);color:#fff;font-size:8px;font-weight:800;padding:2px 8px;border-radius:10px;letter-spacing:.5px">LATEST</div>
+      <div style="background:var(--redBg);padding:10px 16px;font-size:12px;font-weight:700;color:var(--red);display:flex;justify-content:space-between;align-items:center">
+        <span>This Week</span><span style="font-weight:500;font-size:11px;color:var(--g600)">09 Mar — 13 Mar &bull; 5 days</span>
+      </div>
+      <div style="padding:12px 16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B Pallets <span style="color:#DC2626;font-size:10px;font-weight:700">&#9660; -114</span></div><div style="font-size:20px;font-weight:800;color:var(--b)">3,568</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B AB Holes <span style="color:var(--g400);font-size:10px">— 0</span></div><div style="font-size:20px;font-weight:800;color:var(--warn)">784</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B ASRS Progress <span style="color:#059669;font-size:10px;font-weight:700">&#9650; +5.4%</span></div><div style="font-size:16px;font-weight:800;color:var(--b)">27.4%</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">B AB Progress <span style="color:#059669;font-size:10px;font-weight:700">&#9650; +4.7%</span></div><div style="font-size:16px;font-weight:800;color:var(--warn)">35.8%</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">Avg Operators <span style="color:var(--g400);font-size:10px">— 0</span></div><div style="font-size:16px;font-weight:800;color:var(--a)">7</div></div>
+          <div><div style="font-size:8px;color:var(--g400);text-transform:uppercase;font-weight:700;letter-spacing:.4px">Avg Labour <span style="color:#059669;font-size:10px;font-weight:700">&#9650; +28</span></div><div style="font-size:16px;font-weight:800;color:var(--a)">113</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="nav">
@@ -344,7 +392,7 @@ document.getElementById('pwInput').focus();
 <div class="pnl pnl-a"><div class="sec">
   <div class="flex-between">
     <div class="sh"><div class="dot dot-a"></div>Building A</div>
-    <span class="pbadge pb-ok">COMPLETE &mdash; 100%</span>
+    <span class="pbadge pb-wip">HANDOVER &mdash; 93.1%</span>
   </div>
   <div class="g3">
     <div class="cw"><div class="ch">ASRS &mdash; 75,570 pal</div><canvas id="cA_asrs"></canvas></div>
