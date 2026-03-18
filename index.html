@@ -306,6 +306,8 @@ document.getElementById('pwInput').focus();
   <div class="kpi kb"><div class="kv vo">27.4%</div><div class="kl">Bldg B &mdash; ASRS</div><div class="ku">17,964 / 65,560 pal</div></div>
   <div class="kpi kb"><div class="kv vo">35.8%</div><div class="kl">Bldg B &mdash; Anchor</div><div class="ku">5,976 / 16,704 holes</div></div>
   <div class="kpi kb"><div class="kv vb">7.1%</div><div class="kl">Bldg B &mdash; Handover</div><div class="ku">56 aisles</div></div>
+  <div class="kpi kb"><div class="kv vo">73.3%</div><div class="kl">Bldg B &mdash; Drilling</div><div class="ku">15,162 / 20,694</div></div>
+  <div class="kpi kb"><div class="kv vg">98.9%</div><div class="kl">Bldg B &mdash; Coring</div><div class="ku">3,949 / 3,994</div></div>
   <div class="kpi kn"><div class="kv va">2,068</div><div class="kl">Site Photos</div></div>
 </div>
 
@@ -399,34 +401,7 @@ document.getElementById('pwInput').focus();
     <div class="cw"><div class="ch">Anchor &mdash; 19,024 holes</div><canvas id="cA_ab"></canvas></div>
     <div class="cw"><div class="ch">Handover</div><canvas id="cA_hov"></canvas></div>
   </div>
-</div><div class="sec"><div class="sh"><div class="dot dot-a"></div>Zone Progress</div><div class="zr"><div class="zl"><span class="zn">Zone 1</span><span class="zrng">S18-S29 / R58-R82</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">9,086 / 9,086 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 2</span><span class="zrng">S1-S18 / R58-R82</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">13,629 / 13,629 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 3</span><span class="zrng">S23-S29 / R39-R57</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">3,876 / 3,876 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 4</span><span class="zrng">S1-S18 / R39-R57</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">10,659 / 10,659 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 5</span><span class="zrng">S18-S29 / R20-R38</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">7,106 / 7,106 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 6</span><span class="zrng">S1-S18 / R20-R38</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">10,659 / 10,659 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 7</span><span class="zrng">S18-S29 / R1-R19</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">6,930 / 6,930 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 8</span><span class="zrng">S1-S18 / R1-R19</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">10,395 / 10,395 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div><div class="zr"><div class="zl"><span class="zn">Zone 9</span><span class="zrng">S18-S23 / R39-R57</span></div>
-          <div class="ztrack"><div class="zfill za" style="width:100.0%"></div></div>
-          <div class="zpct" style="color:#059669">100.0%</div>
-          <div class="zinfo">3,230 / 3,230 pal <span style="color:#059669;font-weight:600">&#10003;</span></div></div></div>
+</div><div class="sec"><div class="sh"><div class="dot dot-a"></div>Zone Progress</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px"><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 1</span><span style="color:#059669;font-weight:700">9,086 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 2</span><span style="color:#059669;font-weight:700">13,629 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 3</span><span style="color:#059669;font-weight:700">3,876 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 4</span><span style="color:#059669;font-weight:700">10,659 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 5</span><span style="color:#059669;font-weight:700">7,106 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 6</span><span style="color:#059669;font-weight:700">10,659 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 7</span><span style="color:#059669;font-weight:700">6,930 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 8</span><span style="color:#059669;font-weight:700">10,395 &#10003;</span></div><div style="padding:6px 10px;background:#ECFDF5;border-radius:6px;display:flex;justify-content:space-between;align-items:center;font-size:11px"><span style="font-weight:700;color:var(--g800)">Zone 9</span><span style="color:#059669;font-weight:700">3,230 &#10003;</span></div></div></div>
 <div class="sec"><div class="sh"><div class="dot dot-a"></div>Manpower &mdash; DRP-0262</div><div class="res-grid"><div class="res-card"><div class="res-hdr ra">Operators<span class="res-count">3</span></div><div class="res-body"><div class="res-row"><span>Project Engineer</span><span class="res-val">2</span></div><div class="res-row"><span>Project Manager</span><span class="res-val">1</span></div></div></div><div class="res-card"><div class="res-hdr ra">Labour<span class="res-count">104</span></div><div class="res-body"><div class="res-row"><span>Labour</span><span class="res-val">103</span></div><div class="res-row"><span>Foreman</span><span class="res-val">1</span></div></div></div><div class="res-card"><div class="res-hdr ra">Equipment<span class="res-count">3</span></div><div class="res-body"><div class="res-row"><span>Measuring Tape</span><span class="res-val">1</span></div><div class="res-row"><span>Total Telescope</span><span class="res-val">1</span></div><div class="res-row"><span>Surveyor's Telescope</span><span class="res-val">1</span></div></div></div><div class="res-card"><div class="res-hdr ra">Machine<span class="res-count">1</span></div><div class="res-body"><div class="res-row"><span>Forklift 3T</span><span class="res-val">1</span></div></div></div></div></div>
 </div>
 
