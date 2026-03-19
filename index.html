@@ -356,10 +356,9 @@ document.getElementById('pwInput').focus();
 <div class="nav">
   <a class="on" href="#s-ov" onclick="go(event,'s-ov')">Overview</a>
   <a href="#s-ab" onclick="go(event,'s-ab')">Buildings A &amp; B</a>
-  <a href="#s-dc" onclick="go(event,'s-dc')">Drilling &amp; Coring</a>
   <a href="#s-sc" onclick="go(event,'s-sc')">Schedule</a>
-  <a href="#s-dd" onclick="go(event,'s-dd')">Day Detail &amp; Photos</a>
   <a href="#s-w" onclick="go(event,'s-w')">Weather</a>
+  <a href="#s-dd" onclick="go(event,'s-dd')">Day Detail &amp; Photos</a>
 </div>
 
 <!-- ═══ OVERVIEW ═══ -->
@@ -395,11 +394,6 @@ document.getElementById('pwInput').focus();
   <div class="flex-between">
     <div class="sh"><div class="dot dot-a"></div>Building A</div>
     <span class="pbadge pb-wip">HANDOVER &mdash; 93.1%</span>
-  </div>
-  <div class="g3">
-    <div class="cw"><div class="ch">ASRS &mdash; 75,570 pal</div><canvas id="cA_asrs"></canvas></div>
-    <div class="cw"><div class="ch">Anchor &mdash; 19,024 holes</div><canvas id="cA_ab"></canvas></div>
-    <div class="cw"><div class="ch">Handover</div><canvas id="cA_hov"></canvas></div>
   </div>
 </div><div class="sec"><div class="sh"><div class="dot dot-a"></div>Zone Progress <span style="font-weight:400;font-size:10px;color:var(--g400)">click zone for milestones</span></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px"><div class="zone-card" onclick="showZoneMs('A','1')" style="padding:8px 10px;background:#ECFDF5;border-radius:6px;border-left:3px solid #059669;cursor:pointer;transition:.15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
@@ -502,11 +496,6 @@ document.getElementById('pwInput').focus();
     <div class="sh"><div class="dot dot-b"></div>Building B</div>
     <span class="pbadge pb-wip">IN PROGRESS &mdash; 27.4%</span>
   </div>
-  <div class="g3">
-    <div class="cw"><div class="ch">ASRS &mdash; 65,560 pal</div><canvas id="cB_asrs"></canvas></div>
-    <div class="cw"><div class="ch">Anchor &mdash; 16,704 holes</div><canvas id="cB_ab"></canvas></div>
-    <div class="cw"><div class="ch">Handover</div><canvas id="cB_hov"></canvas></div>
-  </div>
 </div><div class="sec"><div class="sh"><div class="dot dot-b"></div>Zone Progress <span style="font-weight:400;font-size:10px;color:var(--g400)">click zone for milestones</span></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px"><div class="zone-card" onclick="showZoneMs('B','1')" style="padding:8px 10px;background:#ECFDF5;border-radius:6px;border-left:3px solid #059669;cursor:pointer;transition:.15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 12px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
             <span style="font-size:11px;font-weight:700;color:var(--g800)">Zone 1</span>
@@ -583,23 +572,7 @@ document.getElementById('pwInput').focus();
 <div class="sec"><div class="sh"><div class="dot dot-b"></div>Manpower &mdash; DRP-0271</div><div class="res-grid"><div class="res-card"><div class="res-hdr rb">Operators<span class="res-count">7</span></div><div class="res-body"><div class="res-row"><span>Site Engineer</span><span class="res-val">2</span></div><div class="res-row"><span>Project Manager</span><span class="res-val">1</span></div><div class="res-row"><span>Project Engineer</span><span class="res-val">1</span></div><div class="res-row"><span>Procurement Officer</span><span class="res-val">1</span></div><div class="res-row"><span>Safety Officer</span><span class="res-val">1</span></div><div class="res-row"><span>Supervisor</span><span class="res-val">1</span></div></div></div><div class="res-card"><div class="res-hdr rb">Labour<span class="res-count">124</span></div><div class="res-body"><div class="res-row"><span>Labour</span><span class="res-val">122</span></div><div class="res-row"><span>Rigger</span><span class="res-val">2</span></div></div></div><div class="res-card"><div class="res-hdr rb">Equipment<span class="res-count">2</span></div><div class="res-body"><div class="res-row"><span>Electric Drill</span><span class="res-val">2</span></div></div></div><div class="res-card"><div class="res-hdr rb">Machine<span class="res-count">12</span></div><div class="res-body"><div class="res-row"><span>Coring Machine</span><span class="res-val">7</span></div><div class="res-row"><span>Forklift 3T</span><span class="res-val">2</span></div><div class="res-row"><span>Crane 60T</span><span class="res-val">1</span></div><div class="res-row"><span>Truck 6W</span><span class="res-val">1</span></div><div class="res-row"><span>Crane 50T</span><span class="res-val">1</span></div></div></div></div></div>
 </div>
 
-<div class="g2">
-  <div class="pnl pnl-a"><div class="cw"><div class="ch">Building A &mdash; Daily Pallets</div><canvas id="cA_pal"></canvas></div></div>
-  <div class="pnl pnl-b"><div class="cw"><div class="ch">Building B &mdash; Daily Pallets</div><canvas id="cB_pal"></canvas></div></div>
-</div>
-<div class="g2">
-  <div class="pnl pnl-a"><div class="cw"><div class="ch">Building A &mdash; Labour</div><canvas id="cA_lab"></canvas></div></div>
-  <div class="pnl pnl-b"><div class="cw"><div class="ch">Building B &mdash; Labour</div><canvas id="cB_lab"></canvas></div></div>
-</div>
-<div class="g2">
-  <div class="pnl pnl-a"><div class="cw"><div class="ch">Building A &mdash; Equipment &amp; Machine</div><canvas id="cA_tool"></canvas></div></div>
-  <div class="pnl pnl-b"><div class="cw"><div class="ch">Building B &mdash; Equipment &amp; Machine</div><canvas id="cB_tool"></canvas></div></div>
-</div>
-
-<!-- ═══ DRILLING & CORING ═══ -->
-<div id="s-dc" class="sa"></div>
-<div class="st">Drilling &amp; <span class="hl">Coring</span> <span>Building B &bull; Anchor Bolt Preparation</span></div>
-
+<!-- Drilling & Coring inside Building B -->
 <div class="pnl pnl-b">
   <div class="sec">
     <div class="g2">
@@ -772,38 +745,6 @@ document.getElementById('pwInput').focus();
 
 <!-- ═══ COST CONTROL ═══ -->
 
-<!-- ═══ DAY DETAIL & PHOTOS ═══ -->
-<div id="s-dd" class="sa"></div>
-<div class="st">Day <span class="hl">Detail</span> &amp; Photos</div>
-
-<div class="pnl"><div class="sec">
-  <div class="sh">Select Date</div>
-  <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px">
-    <input type="date" id="dayPick" style="padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;font-weight:600;color:var(--g800)"
-           min="2025-02-04" max="2026-03-13" value="2026-03-13" onchange="showDay()">
-    <span id="dayDRP" style="font-size:14px;font-weight:700;color:var(--a)"></span>
-  </div>
-  <div id="dayContent" class="dd-grid"></div>
-</div></div>
-
-<div class="pnl"><div class="sec">
-  <div class="sh">Daily Log &mdash; All 225 Working Days</div>
-  <div class="tscroll"><table class="tb" id="logT">
-    <thead><tr><th>Date</th><th>DRP</th><th>Weather</th><th>A Ops</th><th>A Lab</th><th>A ASRS%</th><th>A AB%</th><th>B Ops</th><th>B Lab</th><th>B ASRS%</th><th>B Pallets</th><th>B AB%</th><th>Drill</th><th>Core</th></tr></thead>
-    <tbody id="logB"></tbody>
-  </table></div>
-</div></div>
-
-<div class="pnl"><div class="sec">
-  <div class="sh">Photo Gallery &mdash; 2,068 Photos</div>
-  <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
-    <select id="drpSel" onchange="loadPh()" style="padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;font-weight:600;color:var(--g800);min-width:200px"></select>
-    <span id="phCnt" style="font-size:12px;color:var(--g400)"></span>
-  </div>
-  <div id="phGrid" class="photo-grid"></div>
-  <div id="phModal" class="modal" onclick="closeMod()"><img id="modImg"/><div id="modCap" class="modal-cap"></div></div>
-</div></div>
-
 <!-- ═══ WEATHER & SAFETY ═══ -->
 <div id="s-w" class="sa"></div>
 <div class="st">Site <span class="hl">Weather</span> &amp; Safety <span>Construction Weather Analysis &bull; 225 Working Days</span></div>
@@ -973,6 +914,38 @@ document.getElementById('pwInput').focus();
   </div>
 </div></div>
 
+<!-- ═══ DAY DETAIL & PHOTOS (last section) ═══ -->
+<div id="s-dd" class="sa"></div>
+<div class="st">Day <span class="hl">Detail</span> &amp; Photos</div>
+
+<div class="pnl"><div class="sec">
+  <div class="sh">Select Date</div>
+  <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px">
+    <input type="date" id="dayPick" style="padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;font-weight:600;color:var(--g800)"
+           min="2025-02-04" max="2026-03-13" value="2026-03-13" onchange="showDay()">
+    <span id="dayDRP" style="font-size:14px;font-weight:700;color:var(--a)"></span>
+  </div>
+  <div id="dayContent" class="dd-grid"></div>
+</div></div>
+
+<div class="pnl"><div class="sec">
+  <div class="sh">Daily Log &mdash; All 225 Working Days</div>
+  <div class="tscroll"><table class="tb" id="logT">
+    <thead><tr><th>Date</th><th>DRP</th><th>Weather</th><th>A Ops</th><th>A Lab</th><th>A ASRS%</th><th>A AB%</th><th>B Ops</th><th>B Lab</th><th>B ASRS%</th><th>B Pallets</th><th>B AB%</th><th>Drill</th><th>Core</th></tr></thead>
+    <tbody id="logB"></tbody>
+  </table></div>
+</div></div>
+
+<div class="pnl"><div class="sec">
+  <div class="sh">Photo Gallery &mdash; 2,068 Photos</div>
+  <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
+    <select id="drpSel" onchange="loadPh()" style="padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;font-weight:600;color:var(--g800);min-width:200px"></select>
+    <span id="phCnt" style="font-size:12px;color:var(--g400)"></span>
+  </div>
+  <div id="phGrid" class="photo-grid"></div>
+  <div id="phModal" class="modal" onclick="closeMod()"><img id="modImg"/><div id="modCap" class="modal-cap"></div></div>
+</div></div>
+
 </div>
 
 <script>
@@ -983,7 +956,7 @@ const PH={"DRP-0003": ["DRP-0003_p2_10.jpeg", "DRP-0003_p2_11.jpeg", "DRP-0003_p
 const GANTT=[{"b": "A", "p": "ASRS", "s": "2025-09-17", "e": "2026-03-04"}, {"b": "A", "p": "Anchor Bolt", "s": "2025-09-17", "e": "2026-03-04"}, {"b": "A", "p": "Handover", "s": "2025-12-01", "e": "2026-03-04"}, {"b": "B", "p": "ASRS", "s": "2026-01-27", "e": "2026-03-13"}, {"b": "B", "p": "Anchor Bolt", "s": "2026-01-16", "e": "2026-03-13"}, {"b": "B", "p": "Handover", "s": "2026-02-26", "e": "2026-03-13"}];
 
 function go(e,id){e.preventDefault();document.getElementById(id).scrollIntoView({behavior:'smooth'});}
-const SS=['s-ov','s-ab','s-dc','s-sc','s-dd','s-w'];
+const SS=['s-ov','s-ab','s-sc','s-w','s-dd'];
 window.addEventListener('scroll',()=>{
   let c='';SS.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<=70)c=id;});
   document.querySelectorAll('.nav a').forEach(l=>{l.classList.toggle('on',l.getAttribute('href')==='#'+c);});
@@ -999,22 +972,6 @@ const sA=D.A_start,sB=D.B_start,dA=D.dates.slice(sA),dB=D.dates.slice(sB),sl=(a,
 function ravg(arr,w){w=w||7;const r=[];for(let i=0;i<arr.length;i++){let s=0,c=0;for(let j=Math.max(0,i-w+1);j<=i;j++){s+=arr[j];c++;}r.push(Math.round(s/c*10)/10);}return r;}
 // Progress % smoother — forward-fills to peak (never drops once complete)
 function psmooth(arr){const r=[...arr];let mx=0;for(let i=0;i<r.length;i++){if(r[i]>mx)mx=r[i];else r[i]=mx;}return r;}
-
-// A charts — progress uses psmooth (never drops), manpower uses actual daily numbers
-new Chart(document.getElementById('cA_asrs'),{type:'line',data:{labels:dA,datasets:[{label:'ASRS %',data:psmooth(sl(D.A_asrs,sA)),borderColor:'#1B3A5C',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_ab'),{type:'line',data:{labels:dA,datasets:[{label:'Anchor %',data:psmooth(sl(D.A_ab,sA)),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_hov'),{type:'line',data:{labels:dA,datasets:[{label:'Handover %',data:psmooth(sl(D.A_hov,sA)),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cA_pal'),{type:'bar',data:{labels:dA,datasets:[{label:'Pallets',data:sl(D.A_pallets,sA),backgroundColor:'rgba(27,58,92,.7)',borderRadius:3}]},options:CO});
-new Chart(document.getElementById('cA_lab'),{type:'bar',data:{labels:dA,datasets:[{label:'Operators',data:sl(D.A_ops,sA),backgroundColor:'#1B3A5C',borderRadius:2},{label:'Labour',data:sl(D.A_lab,sA),backgroundColor:'#93B5D9',borderRadius:2}]},options:sO()});
-new Chart(document.getElementById('cA_tool'),{type:'bar',data:{labels:dA,datasets:[{label:'Equipment',data:sl(D.A_equip,sA),backgroundColor:'rgba(27,58,92,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:sl(D.A_mach,sA),backgroundColor:'rgba(27,58,92,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
-
-// B charts — progress uses psmooth, manpower uses actual daily numbers
-new Chart(document.getElementById('cB_asrs'),{type:'line',data:{labels:dB,datasets:[{label:'ASRS %',data:psmooth(sl(D.B_asrs,sB)),borderColor:'#C8102E',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_ab'),{type:'line',data:{labels:dB,datasets:[{label:'Anchor %',data:psmooth(sl(D.B_ab,sB)),borderColor:'#D97706',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_hov'),{type:'line',data:{labels:dB,datasets:[{label:'Handover %',data:psmooth(sl(D.B_hov,sB)),borderColor:'#7C3AED',borderWidth:2.5,fill:{target:'origin',alpha:.08},tension:.4,pointRadius:0,pointHitRadius:8}]},options:pO(105)});
-new Chart(document.getElementById('cB_pal'),{type:'bar',data:{labels:dB,datasets:[{label:'Pallets',data:sl(D.B_pallets,sB),backgroundColor:'rgba(200,16,46,.7)',borderRadius:3}]},options:CO});
-new Chart(document.getElementById('cB_lab'),{type:'bar',data:{labels:dB,datasets:[{label:'Operators',data:sl(D.B_ops,sB),backgroundColor:'#C8102E',borderRadius:2},{label:'Labour',data:sl(D.B_lab,sB),backgroundColor:'#F9CDD4',borderRadius:2}]},options:sO()});
-new Chart(document.getElementById('cB_tool'),{type:'bar',data:{labels:dB,datasets:[{label:'Equipment',data:sl(D.B_equip,sB),backgroundColor:'rgba(200,16,46,.5)',borderRadius:2,stack:'s'},{label:'Machine',data:sl(D.B_mach,sB),backgroundColor:'rgba(200,16,46,.9)',borderRadius:2,stack:'s'}]},options:{...CO,scales:{x:CO.scales.x,y:{...CO.scales.y,stacked:true}}}});
 
 // Drilling & Coring charts
 const DC={"drill_dates": ["2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12"], "drill_daily": [208, 304, 376, 384, 320, 0, 320, 320, 512, 320, 320, 96, 0, 0, 0, 320, 256, 124, 132, 0, 448, 128, 370, 212, 224, 192, 304, 488, 280, 216, 360, 200, 0, 416, 384, 352, 216, 420, 140, 0, 320, 432, 208, 200], "core_dates": ["2026-01-26", "2026-01-27", "2026-01-28", "2026-01-29", "2026-01-30", "2026-01-31", "2026-02-01", "2026-02-02", "2026-02-03", "2026-02-04", "2026-02-05", "2026-02-06", "2026-02-07", "2026-02-08", "2026-02-09", "2026-02-10", "2026-02-11", "2026-02-12", "2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12"], "core_daily": [124, 154, 91, 130, 38, 107, 78, 91, 97, 24, 100, 159, 127, 135, 0, 116, 84, 91, 33, 54, 0, 46, 71, 71, 86, 101, 54, 59, 71, 63, 50, 107, 72, 0, 98, 140, 159, 43, 118, 0, 0, 102, 113, 102, 62]};
