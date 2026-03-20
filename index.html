@@ -580,9 +580,18 @@ document.getElementById('pwInput').focus();
       <!-- Drilling Summary -->
       <div>
         <div class="sh"><div class="dot dot-b"></div>Drilling Progress</div>
-        <div class="ig" style="grid-template-columns:1fr 1fr;margin-bottom:14px">
-          <div class="ic ib"><div class="it">Total Holes</div><div class="iv vb">20,694</div><div class="is">M20: 16,902 &bull; M12: 3,792</div></div>
-          <div class="ic ib"><div class="it">Finished</div><div class="iv" style="color:var(--ok)">16,486</div><div class="is"><span style="color:#DC2626;font-weight:700">4,208 remaining</span> &bull; 79.7%</div></div>
+        <div class="ig" style="grid-template-columns:1fr;margin-bottom:14px">
+          <div class="ic ib" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+            <div>
+              <div class="it">Drilling Progress</div>
+              <div class="iv" style="color:var(--ok)">16,486 <span style="font-size:14px;font-weight:600;color:var(--g400)">/ 20,694</span></div>
+              <div class="is"><span style="color:#DC2626;font-weight:700">4,208 remaining</span> &bull; M20: 16,902 &bull; M12: 3,792</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:32px;font-weight:900;color:var(--ok)">79.7%</div>
+              <div style="font-size:10px;color:var(--g400);font-weight:600">overall complete</div>
+            </div>
+          </div>
         </div>
         <!-- M20 / M12 breakdown -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
