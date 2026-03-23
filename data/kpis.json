@@ -1,0 +1,32 @@
+{
+  "computed_at": "2026-03-23T14:29:46.615892",
+  "drilling": {
+    "overall_finished": 16486,
+    "overall_total": 20694,
+    "overall_pct": 79.7,
+    "m20_finished": 16486,
+    "m20_total": 16902,
+    "m20_pct": 97.5,
+    "snapshot_date": "2026-03-20"
+  },
+  "coring": {
+    "core_finished": 4302,
+    "core_total": 4328,
+    "core_remaining": 26,
+    "coring_done_pct": 99.4,
+    "rebar_found_pct": 25.5,
+    "rebar_denom": 16902
+  },
+  "reports": {
+    "latest_drp": "DRP-0277",
+    "latest_drp_date": "2026-03-20",
+    "working_days": 98,
+    "total_photos": 626,
+    "manpower": {
+      "ops": 8,
+      "labour": 4,
+      "equip": 0,
+      "machine": 1
+    }
+  }
+}
