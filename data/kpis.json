@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-03-23T14:28:58.377100",
+  "computed_at": "2026-03-23T14:29:46.615892",
   "drilling": {
     "overall_finished": 16486,
     "overall_total": 20694,
@@ -21,7 +21,7 @@
     "latest_drp": "DRP-0277",
     "latest_drp_date": "2026-03-20",
     "working_days": 98,
-    "total_photos": 0,
+    "total_photos": 626,
     "manpower": {
       "ops": 8,
       "labour": 4,
