@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-03-23T14:29:46.615892",
+  "computed_at": "2026-03-23T15:14:12.948690",
   "drilling": {
     "overall_finished": 16486,
     "overall_total": 20694,
@@ -23,9 +23,9 @@
     "working_days": 98,
     "total_photos": 626,
     "manpower": {
-      "ops": 8,
-      "labour": 4,
-      "equip": 0,
+      "ops": 9,
+      "labour": 157,
+      "equip": 18,
       "machine": 1
     }
   }
