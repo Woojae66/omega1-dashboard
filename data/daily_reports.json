@@ -1,6 +1,120 @@
 {
-  "generated_at": "2026-03-23T15:14:12.948690",
+  "generated_at": "2026-03-30T12:00:00.000000",
   "entries": [
+    {
+      "date": "2026-03-25",
+      "drp_number": "DRP-0282",
+      "activities": [
+        "[A] Alignment Sky rail SRM 3, 5",
+        "[A] Welding Sky rail SRM 4",
+        "[A] Inspection Sky Rail SRM 4",
+        "[A] Grouting SRM 1",
+        "[A] Installation sky rail (TG-01) SRM 1-2",
+        "[B] Lifted/stacking installation 22 base = 456 pallet (Zone 2,3,5) Zone 2: Tier 2nd = 4 base, Tier 3rd = 4 base, Zone 3: Tier 1st = 3 base, Zone 5: Tier 3rd = 2 base, Tier 4th = 9 base",
+        "[B] Assembly Racking (Frame & Box Assembly)",
+        "[B] Installation stud & base plate SRM 22-23, SRM 13-14",
+        "[B] Alignment (X) SRM 15-16",
+        "[B] Adjust Alignment (Tier 1) SRM 16(R)-17(L)",
+        "[B] Coring & Drilling SRM 1",
+        "[B] Transport material off-site area to laydown"
+      ],
+      "drill_count": 2,
+      "core_count": 2,
+      "weather_am": "Clear",
+      "weather_pm": "",
+      "ops": 10,
+      "labour": 158,
+      "equip": 7,
+      "machine": 8
+    },
+    {
+      "date": "2026-03-24",
+      "drp_number": "DRP-0281",
+      "activities": [
+        "[A] Alignment Sky rail SRM 3, 5",
+        "[A] Welding Sky rail SRM 4",
+        "[A] Inspection Sky Rail SRM 4",
+        "[A] Grouting SRM 1",
+        "[B] Lifted/racking installation 29 base = 714 pallet (Zone 5) Tier 1st = 4 base, Tier 2nd = 12 base, Tier 3rd = 10 base, Tier 4th = 3 base",
+        "[B] Assembly Racking (Frame & Box Assembly)",
+        "[B] Installation stud & base plate SRM 22-23",
+        "[B] Alignment (X) SRM 16(R)-17(L)",
+        "[B] Installation Top hanging Beam SRM 18-20",
+        "[B] Coring & Drilling SRM 1",
+        "[B] Marking line SRM 1",
+        "[B] Transport material off-site area to laydown"
+      ],
+      "drill_count": 2,
+      "core_count": 2,
+      "weather_am": "Clear",
+      "weather_pm": "",
+      "ops": 9,
+      "labour": 158,
+      "equip": 7,
+      "machine": 8
+    },
+    {
+      "date": "2026-03-23",
+      "drp_number": "DRP-0280",
+      "activities": [
+        "[A] Alignment Sky rail SRM 5",
+        "[A] Welding Sky rail SRM 8",
+        "[A] Inspection Sky Rail SRM 8-9",
+        "[A] Grouting SRM 1-2",
+        "[B] Lifted/racking installation 28 base = 546 pallet (Zone 5) Tier 1st = 8 base, Tier 2nd = 3 base, Tier 3rd = 6 base, Tier 4th = 11 base",
+        "[B] Assembly Racking (Frame & Box Assembly)",
+        "[B] Installation stud & base plate SRM 22(R)-23(L)",
+        "[B] Alignment (X) SRM 15(R)-18(L)",
+        "[B] Installation Vertically bracing SRM 15(R)-18(L)",
+        "[B] Bolt tightening vertically bracing SRM 15(R)-18(L)",
+        "[B] Coring & Drilling SRM 1",
+        "[B] Marking line SRM 1",
+        "[B] Transport material off-site area to laydown"
+      ],
+      "drill_count": 2,
+      "core_count": 2,
+      "weather_am": "Clear",
+      "weather_pm": "",
+      "ops": 9,
+      "labour": 152,
+      "equip": 7,
+      "machine": 8
+    },
+    {
+      "date": "2026-03-22",
+      "drp_number": "DRP-0279",
+      "activities": [
+        "[A] Welding Sky rail SRM 9"
+      ],
+      "drill_count": 0,
+      "core_count": 0,
+      "weather_am": "Clear",
+      "weather_pm": "",
+      "ops": 2,
+      "labour": 7,
+      "equip": 3,
+      "machine": 0
+    },
+    {
+      "date": "2026-03-21",
+      "drp_number": "DRP-0278",
+      "activities": [
+        "[A] Alignment Sky rail SRM 5",
+        "[A] Welding Sky rail SRM 10",
+        "[A] Inspection Sky Rail SRM 8-9",
+        "[B] Alignment (Y) SRM 15R-16(RL)",
+        "[B] Installation Vertically bracing SRM 15R-16(RL)",
+        "[B] Bolt tightening vertically bracing SRM 15R-16(RL)"
+      ],
+      "drill_count": 0,
+      "core_count": 0,
+      "weather_am": "Clear",
+      "weather_pm": "",
+      "ops": 7,
+      "labour": 38,
+      "equip": 7,
+      "machine": 8
+    },
     {
       "date": "2026-03-20",
       "drp_number": "DRP-0277",

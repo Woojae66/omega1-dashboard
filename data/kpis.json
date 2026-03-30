@@ -1,5 +1,5 @@
 {
-  "computed_at": "2026-03-23T15:14:12.948690",
+  "computed_at": "2026-03-30T12:00:00.000000",
   "drilling": {
     "overall_finished": 16486,
     "overall_total": 20694,
@@ -18,15 +18,15 @@
     "rebar_denom": 16902
   },
   "reports": {
-    "latest_drp": "DRP-0277",
-    "latest_drp_date": "2026-03-20",
-    "working_days": 98,
+    "latest_drp": "DRP-0282",
+    "latest_drp_date": "2026-03-25",
+    "working_days": 103,
     "total_photos": 626,
     "manpower": {
-      "ops": 9,
-      "labour": 157,
-      "equip": 18,
-      "machine": 1
+      "ops": 10,
+      "labour": 158,
+      "equip": 7,
+      "machine": 8
     }
   }
 }
