@@ -860,7 +860,7 @@ document.getElementById('pwInput').focus();
 <div class="pnl"><div class="sec">
   <div class="sh">Daily Log &mdash; All 239 Working Days</div>
   <div class="tscroll"><table class="tb" id="logT">
-    <thead><tr><th>Date</th><th>DRP</th><th>Weather</th><th>A Ops</th><th>A Lab</th><th>A ASRS%</th><th>A AB%</th><th>B Ops</th><th>B Lab</th><th>B ASRS%</th><th>B Pallets</th><th>B AB%</th><th>Drill</th><th>Core</th></tr></thead>
+    <thead><tr><th>Date</th><th>DRP</th><th>Weather</th><th>A Ops</th><th>A Lab</th><th>A ASRS%</th><th>A AB%</th><th>B Ops</th><th>B Lab</th><th>B ASRS%</th><th>B Pallets</th><th>B AB%</th></tr></thead>
     <tbody id="logB"></tbody>
   </table></div>
 </div></div>
@@ -1185,10 +1185,6 @@ function buildLogTable() {
     const bAb   = (dd && dd.B && dd.B.ab_total_pct   != null) ? dd.B.ab_total_pct.toFixed(1) + '%'
                 : (_cum ? _cum.abPct.toFixed(1) + '%' : '--');
 
-    // Drill / Core from LOG
-    const drill = (log && log.dc) ? log.dc : '--';
-    const core  = (log && log.cc) ? log.cc : '--';
-
     const tr = document.createElement('tr');
     const wCls = (weather === 'Rain' || weather === 'rain') ? 'rain-w' : '';
     tr.innerHTML =
@@ -1197,9 +1193,7 @@ function buildLogTable() {
       '<td class="bld-a">' + aOps + '</td><td class="bld-a">' + aLab + '</td>' +
       '<td>' + aAsrs + '</td><td>' + aAb + '</td>' +
       '<td class="bld-b">' + bOps + '</td><td class="bld-b">' + bLab + '</td>' +
-      '<td>' + bAsrs + '</td><td>' + bPal + '</td><td>' + bAb + '</td>' +
-      '<td style="font-weight:' + (log&&log.dc?'700':'400') + ';color:' + (log&&log.dc?'var(--b)':'var(--g300)') + '">' + drill + '</td>' +
-      '<td style="font-weight:' + (log&&log.cc?'700':'400') + ';color:' + (log&&log.cc?'#059669':'var(--g300)') + '">' + core + '</td>';
+      '<td>' + bAsrs + '</td><td>' + bPal + '</td><td>' + bAb + '</td>';
     tbody.appendChild(tr);
   });
 }
