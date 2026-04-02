@@ -866,6 +866,12 @@ document.getElementById('pwInput').focus();
 </div></div>
 
 <div class="pnl"><div class="sec">
+  <div class="sh"><span style="color:#DC2626">&#9654;</span> Video Time-lapse</div>
+  <div style="font-size:10px;color:var(--g400);margin-bottom:10px">Weekly site progress recordings &mdash; click a date to watch</div>
+  <div id="videoGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px"></div>
+</div></div>
+
+<div class="pnl"><div class="sec">
   <div class="sh">Photo Gallery &mdash; 626 Photos</div>
   <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
     <select id="drpSel" onchange="loadPh()" style="padding:8px 14px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:inherit;font-weight:600;color:var(--g800);min-width:200px"></select>
@@ -1346,6 +1352,36 @@ buildLogTable();
 showDay();
 
 // Photo gallery
+// Video Time-lapse data — add new entries here each week: {date, label, url}
+const VIDEOS = [
+  {date: "2026-03-21", label: "Week 21–25 Mar 2026", url: "https://youtu.be/bxoCwHsKjrA"}
+];
+(function buildVideoGrid(){
+  var g = document.getElementById('videoGrid');
+  if (!g) return;
+  if (!VIDEOS.length) { g.innerHTML = '<div style="font-size:11px;color:var(--g400);padding:12px">No videos yet.</div>'; return; }
+  VIDEOS.forEach(function(v){
+    var d = new Date(v.date);
+    var day = d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});
+    var card = document.createElement('a');
+    card.href = v.url;
+    card.target = '_blank';
+    card.rel = 'noopener';
+    card.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--g50);border:1px solid var(--g200);border-radius:8px;text-decoration:none;transition:all .15s;cursor:pointer';
+    card.onmouseover = function(){ this.style.background='#FEF2F2'; this.style.borderColor='#DC2626'; };
+    card.onmouseout  = function(){ this.style.background='var(--g50)'; this.style.borderColor='var(--g200)'; };
+    card.innerHTML =
+      '<div style="width:36px;height:36px;background:#DC2626;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+        '<span style="color:#fff;font-size:16px;margin-left:2px">&#9654;</span>' +
+      '</div>' +
+      '<div>' +
+        '<div style="font-size:12px;font-weight:700;color:var(--g800)">' + day + '</div>' +
+        '<div style="font-size:9px;color:var(--g400)">' + v.label + '</div>' +
+      '</div>';
+    g.appendChild(card);
+  });
+})();
+
 var sel = document.getElementById('drpSel');
 Object.keys(PH).reverse().forEach(function(drp) {
   var o = document.createElement('option');
